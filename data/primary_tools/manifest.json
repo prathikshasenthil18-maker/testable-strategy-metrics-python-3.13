@@ -33,7 +33,7 @@
     },
     {
       "primary_tool": "Coverage.py",
-      "primary_tool_id": "coverage_dot_py",
+      "primary_tool_id": "coverage_dot_py__coverage_py",
       "metric_count": 29,
       "secondary_tools": [
         "coverage.py + ast paths",
@@ -43,16 +43,16 @@
         "pytest-cov",
         "pytest-cov --cov-branch"
       ],
-      "file": "coverage_dot_py.json"
+      "file": "coverage_dot_py__coverage_py.json"
     },
     {
       "primary_tool": "coverage.py",
-      "primary_tool_id": "coverage_dot_py__coverage_py",
+      "primary_tool_id": "coverage_dot_py",
       "metric_count": 1,
       "secondary_tools": [
         "pyflakes"
       ],
-      "file": "coverage_dot_py__coverage_py.json"
+      "file": "coverage_dot_py.json"
     },
     {
       "primary_tool": "coverage.py + beniget",
@@ -65,21 +65,21 @@
     },
     {
       "primary_tool": "Crosshair",
-      "primary_tool_id": "crosshair__crosshair",
+      "primary_tool_id": "crosshair",
       "metric_count": 2,
       "secondary_tools": [
         "Mccabe"
       ],
-      "file": "crosshair__crosshair.json"
+      "file": "crosshair.json"
     },
     {
       "primary_tool": "CrossHair",
-      "primary_tool_id": "crosshair",
+      "primary_tool_id": "crosshair__crosshair",
       "metric_count": 1,
       "secondary_tools": [
         "pyflakes"
       ],
-      "file": "crosshair.json"
+      "file": "crosshair__crosshair.json"
     },
     {
       "primary_tool": "jscpd",

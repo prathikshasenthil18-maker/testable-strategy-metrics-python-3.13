@@ -1,53 +1,32 @@
 {
   "workbook": "Testable_Strategy_Metrics_Mapping_v0.2_19_may_2026 2.xlsx",
   "workbook_version": "0.2",
-  "primary_tool": "Crosshair",
+  "primary_tool": "CrossHair",
   "primary_tool_id": "crosshair__crosshair",
-  "metric_count": 2,
+  "metric_count": 1,
   "secondary_tools": [
-    "Mccabe"
+    "pyflakes"
   ],
   "metrics": [
     {
-      "id": "structural_analysis_cyclomatic_complexity_execution_path_integrity",
+      "id": "data_flow_testing_all_definition_coverage_null_and_boundary_flow_analysis",
       "sheet": "White Box",
       "l1_strategy": "White Box",
-      "l2_testing_type": "Structural Analysis",
-      "l3_technique": "Cyclomatic Complexity",
-      "l4_classification": "Static Analysis Metric",
-      "l5_metric": "Execution Path Integrity",
-      "description": "Number of independent execution paths through a function; reflects decision-point density and branch explosion risk",
-      "derivation": "execution_path_integrity = (\n    functions_without_counterexample / max(total_functions_checked, 1)\n)",
-      "raw_measurement_formula": "CC = E – N + 2P  (E=edges, N=nodes, P=connected components)",
-      "expected_threshold": "<= 10 per function (lower is better)",
-      "normalization_formula": "MAX(0, 100 – ((CC–1)/9 × 100))  capped 0–100",
-      "execution_frequency": "Every Commit / PR",
+      "l2_testing_type": "Data Flow Testing",
+      "l3_technique": "All Definition Coverage",
+      "l4_classification": "Edge Case Handling",
+      "l5_metric": "Null and Boundary Flow Analysis",
+      "description": "Measures how the data flow reacts when a definition results in an unexpected state such as None or an overflow, identifying risks where valid variable definitions might lead to a crash at use.",
+      "derivation": "boundary_issue_ratio = (\n    functions_with_counterexample / max(total_functions_checked, 1)\n)",
+      "raw_measurement_formula": "Null Flow Risk Score = Count(Definitions reaching a Use with no null/boundary guard) × 10",
+      "expected_threshold": "0 unguarded null or boundary flows from definition to use",
+      "normalization_formula": "MAX(0, 100 – Null_Flow_Risk_Score)",
+      "execution_frequency": "Daily / Per Sprint",
       "python": {
-        "primary_tool": "Crosshair",
-        "secondary_tool": "Mccabe",
+        "primary_tool": "CrossHair",
+        "secondary_tool": "pyflakes",
         "metric_emitted_directly": "No",
-        "derivation": "execution_path_integrity = (\n    functions_without_counterexample / max(total_functions_checked, 1)\n)"
-      }
-    },
-    {
-      "id": "structural_analysis_cyclomatic_complexity_total_logical_combinatorial_coverage",
-      "sheet": "White Box",
-      "l1_strategy": "White Box",
-      "l2_testing_type": "Structural Analysis",
-      "l3_technique": "Cyclomatic Complexity",
-      "l4_classification": "Logic Coverage Metric",
-      "l5_metric": "Total Logical Combinatorial Coverage",
-      "description": "It measures the percentage of all possible unique sequences of branches that have been traveled. While branch coverage looks at individual forks, path coverage looks at the entire \"journey\" through the function.",
-      "derivation": "logical_combinatorial_coverage = (\n    functions_without_counterexample / max(total_functions_checked, 1)\n)",
-      "raw_measurement_formula": "Testability Score = AVG(MI) across all modules in scope",
-      "expected_threshold": "AVG MI >= 65 across codebase",
-      "normalization_formula": "Score = MIN(100, AVG_MI) [already 0–100 scale]",
-      "execution_frequency": "Every Commit / PR",
-      "python": {
-        "primary_tool": "Crosshair",
-        "secondary_tool": "Mccabe",
-        "metric_emitted_directly": "No",
-        "derivation": "logical_combinatorial_coverage = (\n    functions_without_counterexample / max(total_functions_checked, 1)\n)"
+        "derivation": "boundary_issue_ratio = (\n    functions_with_counterexample / max(total_functions_checked, 1)\n)"
       }
     }
   ]

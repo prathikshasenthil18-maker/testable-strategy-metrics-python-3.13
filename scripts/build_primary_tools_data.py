@@ -61,9 +61,11 @@ def build() -> dict:
         key = normalize_primary_tool_name(str(primary))
         by_primary[key].append(metric_payload(raw))
 
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    if OUT_DIR.exists():
+        shutil.rmtree(OUT_DIR)
     if PKG_DIR.exists():
         shutil.rmtree(PKG_DIR)
+    OUT_DIR.mkdir(parents=True)
     PKG_DIR.mkdir(parents=True)
 
     slug_map = assign_primary_tool_slugs(list(by_primary.keys()))
