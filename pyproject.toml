@@ -1,0 +1,29 @@
+[project]
+name = "testable-strategy-metrics"
+version = "0.2.0"
+description = "Testable Strategy Metrics Mapping v0.2 — Python 3.13 tools and derivations"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "pandas>=2.2",
+    "openpyxl>=3.1",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+strategy-metrics = "strategy_metrics.cli:main"
+
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+strategy_metrics = ["python_metrics.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
