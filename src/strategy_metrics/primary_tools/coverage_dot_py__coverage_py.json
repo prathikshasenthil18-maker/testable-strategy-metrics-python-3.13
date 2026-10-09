@@ -1,0 +1,33 @@
+{
+  "workbook": "Testable_Strategy_Metrics_Mapping_v0.2_19_may_2026 2.xlsx",
+  "workbook_version": "0.2",
+  "primary_tool": "coverage.py",
+  "primary_tool_id": "coverage_dot_py__coverage_py",
+  "metric_count": 1,
+  "secondary_tools": [
+    "pyflakes"
+  ],
+  "metrics": [
+    {
+      "id": "data_flow_testing_all_definition_coverage_data_path_correlation",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Data Flow Testing",
+      "l3_technique": "All Definition Coverage",
+      "l4_classification": "Definition-Use Mapping",
+      "l5_metric": "Data Path Correlation",
+      "description": "Creates a bridge between where a variable is defined and at least one line of code where that specific value is later read or modified, measuring the integrity of the data journey.",
+      "derivation": "data_path_correlation = used_definitions / max(definitions, 1)",
+      "raw_measurement_formula": "DU Correlation % = (Definitions linked to at least one Use / Total Definitions) × 100",
+      "expected_threshold": ">= 75% of definitions linked to a verified use path",
+      "normalization_formula": "Score = DU Correlation % [gate at 75%]",
+      "execution_frequency": "Daily / Per Sprint",
+      "python": {
+        "primary_tool": "coverage.py",
+        "secondary_tool": "pyflakes",
+        "metric_emitted_directly": "No",
+        "derivation": "data_path_correlation = used_definitions / max(definitions, 1)"
+      }
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "workbook": "Testable_Strategy_Metrics_Mapping_v0.2_19_may_2026 2.xlsx",
+  "workbook_version": "0.2",
+  "primary_tool": "Crosshair",
+  "primary_tool_id": "crosshair__crosshair",
+  "metric_count": 2,
+  "secondary_tools": [
+    "Mccabe"
+  ],
+  "metrics": [
+    {
+      "id": "structural_analysis_cyclomatic_complexity_execution_path_integrity",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Structural Analysis",
+      "l3_technique": "Cyclomatic Complexity",
+      "l4_classification": "Static Analysis Metric",
+      "l5_metric": "Execution Path Integrity",
+      "description": "Number of independent execution paths through a function; reflects decision-point density and branch explosion risk",
+      "derivation": "execution_path_integrity = (\n    functions_without_counterexample / max(total_functions_checked, 1)\n)",
+      "raw_measurement_formula": "CC = E – N + 2P  (E=edges, N=nodes, P=connected components)",
+      "expected_threshold": "<= 10 per function (lower is better)",
+      "normalization_formula": "MAX(0, 100 – ((CC–1)/9 × 100))  capped 0–100",
+      "execution_frequency": "Every Commit / PR",
+      "python": {
+        "primary_tool": "Crosshair",
+        "secondary_tool": "Mccabe",
+        "metric_emitted_directly": "No",
+        "derivation": "execution_path_integrity = (\n    functions_without_counterexample / max(total_functions_checked, 1)\n)"
+      }
+    },
+    {
+      "id": "structural_analysis_cyclomatic_complexity_total_logical_combinatorial_coverage",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Structural Analysis",
+      "l3_technique": "Cyclomatic Complexity",
+      "l4_classification": "Logic Coverage Metric",
+      "l5_metric": "Total Logical Combinatorial Coverage",
+      "description": "It measures the percentage of all possible unique sequences of branches that have been traveled. While branch coverage looks at individual forks, path coverage looks at the entire \"journey\" through the function.",
+      "derivation": "logical_combinatorial_coverage = (\n    functions_without_counterexample / max(total_functions_checked, 1)\n)",
+      "raw_measurement_formula": "Testability Score = AVG(MI) across all modules in scope",
+      "expected_threshold": "AVG MI >= 65 across codebase",
+      "normalization_formula": "Score = MIN(100, AVG_MI) [already 0–100 scale]",
+      "execution_frequency": "Every Commit / PR",
+      "python": {
+        "primary_tool": "Crosshair",
+        "secondary_tool": "Mccabe",
+        "metric_emitted_directly": "No",
+        "derivation": "logical_combinatorial_coverage = (\n    functions_without_counterexample / max(total_functions_checked, 1)\n)"
+      }
+    }
+  ]
+}

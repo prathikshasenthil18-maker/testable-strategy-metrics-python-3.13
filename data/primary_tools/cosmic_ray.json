@@ -1,0 +1,159 @@
+{
+  "workbook": "Testable_Strategy_Metrics_Mapping_v0.2_19_may_2026 2.xlsx",
+  "workbook_version": "0.2",
+  "primary_tool": "cosmic-ray",
+  "primary_tool_id": "cosmic_ray",
+  "metric_count": 7,
+  "secondary_tools": [
+    "mutmut"
+  ],
+  "metrics": [
+    {
+      "id": "mutation_testing_mutation_score_logic_error_sensitivity",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Mutation Testing",
+      "l3_technique": "Mutation Score",
+      "l4_classification": "Fault Detection Capability",
+      "l5_metric": "Logic Error Sensitivity",
+      "description": "Evaluates the ability of tests to fail when the underlying code logic is altered, measuring whether tests are sensitive enough to catch subtle mistakes that structural coverage might miss.",
+      "derivation": "Logic Error Sensitivity =\n(total jobs - surviving mutants) / total jobs",
+      "raw_measurement_formula": "Sensitivity Score = (Survived Mutants caught by assertion-only tests / Total Survived Mutants) × 100",
+      "expected_threshold": ">= 70% of survived mutants caught by targeted assertion tests",
+      "normalization_formula": "Score = Sensitivity Score % [gate at 70%]",
+      "execution_frequency": "Daily / Per Sprint",
+      "python": {
+        "primary_tool": "cosmic-ray",
+        "secondary_tool": "mutmut",
+        "metric_emitted_directly": "No",
+        "derivation": "Logic Error Sensitivity =\n(total jobs - surviving mutants) / total jobs"
+      }
+    },
+    {
+      "id": "mutation_testing_mutation_score_test_rigor_assessment",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Mutation Testing",
+      "l3_technique": "Mutation Score",
+      "l4_classification": "Test Coverage Quality Validation",
+      "l5_metric": "Test Rigor Assessment",
+      "description": "Serves as a meta-metric that validates the quality of your existing coverage. While statement coverage tells you if a line was executed, this measures how well that line was actually tested.",
+      "derivation": "Test Rigor =\n(total jobs - surviving mutants) / total jobs",
+      "raw_measurement_formula": "Rigor Score = (Killed Mutants / Total Mutants Generated) × 100",
+      "expected_threshold": ">= 70% overall mutant kill rate",
+      "normalization_formula": "Score = Rigor Score % [gate at 70%]",
+      "execution_frequency": "Daily / Per Sprint",
+      "python": {
+        "primary_tool": "cosmic-ray",
+        "secondary_tool": "mutmut",
+        "metric_emitted_directly": "No",
+        "derivation": "Test Rigor =\n(total jobs - surviving mutants) / total jobs"
+      }
+    },
+    {
+      "id": "mutation_testing_mutation_score_weak_spot_localization",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Mutation Testing",
+      "l3_technique": "Mutation Score",
+      "l4_classification": "Test Case Improvement Identification",
+      "l5_metric": "Weak Spot Localization",
+      "description": "Pinpoints exactly which surviving mutants were not caught, identifying specific areas where test cases need to be added or strengthened to write more meaningful assertions.",
+      "derivation": "Weak Spots = surviving mutants",
+      "raw_measurement_formula": "Weak Spot Count = Count(Modules where Mutation Kill Rate < 50%)",
+      "expected_threshold": "0 modules with mutation kill rate below 50%",
+      "normalization_formula": "MAX(0, 100 – (Weak_Spot_Count × 15))",
+      "execution_frequency": "Daily / Per Sprint",
+      "python": {
+        "primary_tool": "cosmic-ray",
+        "secondary_tool": "mutmut",
+        "metric_emitted_directly": "No",
+        "derivation": "Weak Spots = surviving mutants"
+      }
+    },
+    {
+      "id": "mutation_testing_mutation_score_boundary_mutant_analysis",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Mutation Testing",
+      "l3_technique": "Mutation Score",
+      "l4_classification": "Edge Case Detection",
+      "l5_metric": "Boundary Mutant Analysis",
+      "description": "Measures the test suite ability to catch errors at boundaries by specifically mutating operators, identifying if tests are robust enough to handle the precise limits of the code logic.",
+      "derivation": "Boundary Weakness =\ncount(TestOutcome.SURVIVED)",
+      "raw_measurement_formula": "Boundary Kill Rate % = (Boundary Operator Mutants Killed / Total Boundary Mutants) × 100",
+      "expected_threshold": ">= 80% of boundary operator mutants killed",
+      "normalization_formula": "Score = Boundary Kill Rate % [gate at 80%]",
+      "execution_frequency": "Daily / Per Sprint",
+      "python": {
+        "primary_tool": "cosmic-ray",
+        "secondary_tool": "mutmut",
+        "metric_emitted_directly": "No",
+        "derivation": "Boundary Weakness =\ncount(TestOutcome.SURVIVED)"
+      }
+    },
+    {
+      "id": "mutation_testing_mutation_score_change_resilience_testing",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Mutation Testing",
+      "l3_technique": "Mutation Score",
+      "l4_classification": "Regression Testing Validation",
+      "l5_metric": "Change Resilience Testing",
+      "description": "Ensures the test suite is powerful enough to protect the code against future accidental regressions, measuring the stability of the safety net provided by the tests during updates.",
+      "derivation": "Regression Strength =\nK (in changed modules) / M (in changed modules)",
+      "raw_measurement_formula": "Resilience Score = (Post-Change Mutation Kill Rate / Pre-Change Mutation Kill Rate) × 100",
+      "expected_threshold": "Resilience Score >= 95% (< 5% kill rate degradation after change)",
+      "normalization_formula": "Score = MIN(100, Resilience_Score)",
+      "execution_frequency": "Daily / Per Sprint",
+      "python": {
+        "primary_tool": "cosmic-ray",
+        "secondary_tool": "mutmut",
+        "metric_emitted_directly": "No",
+        "derivation": "Regression Strength =\nK (in changed modules) / M (in changed modules)"
+      }
+    },
+    {
+      "id": "mutation_testing_mutation_score_semantic_integrity_check",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Mutation Testing",
+      "l3_technique": "Mutation Score",
+      "l4_classification": "Code Logic Validation",
+      "l5_metric": "Semantic Integrity Check",
+      "description": "Confirms that the tests are actually verifying the intended behavior (semantics) rather than just executing the code, measuring alignment between the code logic and the expectations in test assertions.",
+      "derivation": "Semantic Integrity =\n1 - (S / M)",
+      "raw_measurement_formula": "Semantic Pass Rate % = (Mutants testing semantic behavior killed / Total Semantic Mutants) × 100",
+      "expected_threshold": ">= 75% semantic mutant kill rate",
+      "normalization_formula": "Score = Semantic Pass Rate % [gate at 75%]",
+      "execution_frequency": "Daily / Per Sprint",
+      "python": {
+        "primary_tool": "cosmic-ray",
+        "secondary_tool": "mutmut",
+        "metric_emitted_directly": "No",
+        "derivation": "Semantic Integrity =\n1 - (S / M)"
+      }
+    },
+    {
+      "id": "mutation_testing_mutation_score_mutation_kill_rate",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Mutation Testing",
+      "l3_technique": "Mutation Score",
+      "l4_classification": "Test Suite Effectiveness Evaluation",
+      "l5_metric": "Mutation Kill Rate %",
+      "description": "% of artificially introduced code mutations (mutants) killed by the test suite — measures test quality not just coverage",
+      "derivation": "Mutation Score =\n(K / M) * 100",
+      "raw_measurement_formula": "Mutation Kill Rate % = (Killed Mutants / Total Non-Equivalent Mutants) × 100",
+      "expected_threshold": ">= 70% mutation kill rate",
+      "normalization_formula": "Score = Mutation Kill Rate %  [gate at 70%]",
+      "execution_frequency": "Daily / Per Sprint",
+      "python": {
+        "primary_tool": "cosmic-ray",
+        "secondary_tool": "mutmut",
+        "metric_emitted_directly": "No",
+        "derivation": "Mutation Score =\n(K / M) * 100"
+      }
+    }
+  ]
+}

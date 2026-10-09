@@ -1,0 +1,159 @@
+{
+  "workbook": "Testable_Strategy_Metrics_Mapping_v0.2_19_may_2026 2.xlsx",
+  "workbook_version": "0.2",
+  "primary_tool": "jscpd",
+  "primary_tool_id": "jscpd",
+  "metric_count": 7,
+  "secondary_tools": [
+    "copydetect"
+  ],
+  "metrics": [
+    {
+      "id": "code_quality_auditing_code_duplication_multi_point_failure_probability",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Code Quality Auditing",
+      "l3_technique": "Code Duplication",
+      "l4_classification": "Defect Propagation Risk Detection",
+      "l5_metric": "Multi-Point Failure Probability",
+      "description": "Identifies the risk that a single bug exists in multiple locations due to copy-paste programming, measuring how likely an error is to spread across the system.",
+      "derivation": "MPFP = (GroupSize \\times RiskFactor) / TotalFragments",
+      "raw_measurement_formula": "Propagation Risk = Count(Duplicated Blocks with confirmed defect history) × 20",
+      "expected_threshold": "0 defect-linked duplicated blocks in codebase",
+      "normalization_formula": "MAX(0, 100 – Propagation_Risk)",
+      "execution_frequency": "Daily",
+      "python": {
+        "primary_tool": "jscpd",
+        "secondary_tool": "copydetect",
+        "metric_emitted_directly": "No",
+        "derivation": "MPFP = (GroupSize \\times RiskFactor) / TotalFragments"
+      }
+    },
+    {
+      "id": "code_quality_auditing_code_duplication_redundancy_localization",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Code Quality Auditing",
+      "l3_technique": "Code Duplication",
+      "l4_classification": "Refactoring Identification",
+      "l5_metric": "Redundancy Localization",
+      "description": "Pinpoints specific clusters of identical or near-identical code that should be merged into a single reusable function, identifying exactly which files are bloating the project.",
+      "derivation": "Count of unique clone groups in report",
+      "raw_measurement_formula": "Redundancy Score = Count(Clone Clusters with >= 3 instances) × 10 + Count(Clone Clusters with 2 instances) × 3",
+      "expected_threshold": "0 clone clusters with 3+ instances; < 5 two-instance clusters",
+      "normalization_formula": "MAX(0, 100 – Redundancy_Score)",
+      "execution_frequency": "Daily",
+      "python": {
+        "primary_tool": "jscpd",
+        "secondary_tool": "copydetect",
+        "metric_emitted_directly": "No",
+        "derivation": "Count of unique clone groups in report"
+      }
+    },
+    {
+      "id": "code_quality_auditing_code_duplication_structural_cleanliness_score",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Code Quality Auditing",
+      "l3_technique": "Code Duplication",
+      "l4_classification": "Code Quality Assessment",
+      "l5_metric": "Structural Cleanliness Score",
+      "description": "Evaluates the overall cleanliness of the code by measuring the percentage of duplication. High duplication scores indicate a lack of modular design and poor abstraction.",
+      "derivation": "Derivation: \n1 - (Total Duplicated Lines / Total Repository Lines)",
+      "raw_measurement_formula": "Cleanliness Score = 100 – ((Duplicated Lines / Total Lines) × 100)",
+      "expected_threshold": ">= 95% unique code (< 5% duplication)",
+      "normalization_formula": "Score = Cleanliness Score % [gate at 95%]",
+      "execution_frequency": "Daily",
+      "python": {
+        "primary_tool": "jscpd",
+        "secondary_tool": "copydetect",
+        "metric_emitted_directly": "No",
+        "derivation": "Derivation: \n1 - (Total Duplicated Lines / Total Repository Lines)"
+      }
+    },
+    {
+      "id": "code_quality_auditing_code_duplication_test_suite_streamlining",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Code Quality Auditing",
+      "l3_technique": "Code Duplication",
+      "l4_classification": "Test Maintenance Reduction",
+      "l5_metric": "Test Suite Streamlining",
+      "description": "Measures the redundant effort spent writing similar tests for identical code blocks, reducing the number of tests that need to be managed, updated, and run.",
+      "derivation": "Duplicated Lines / Total lines",
+      "raw_measurement_formula": "Redundant Test % = (Duplicated Test Blocks / Total Test Lines) × 100",
+      "expected_threshold": "< 3% test code duplication",
+      "normalization_formula": "MAX(0, 100 – (Redundant_Test% / 3 × 100))",
+      "execution_frequency": "Daily",
+      "python": {
+        "primary_tool": "jscpd",
+        "secondary_tool": "copydetect",
+        "metric_emitted_directly": "No",
+        "derivation": "Duplicated Lines / Total lines"
+      }
+    },
+    {
+      "id": "code_quality_auditing_code_duplication_abstraction_potential",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Code Quality Auditing",
+      "l3_technique": "Code Duplication",
+      "l4_classification": "Refactoring Opportunity Detection",
+      "l5_metric": "Abstraction Potential",
+      "description": "Identifies patterns where common logic can be abstracted into a shared library or parent class, measuring the simplicity gain from replacing repeated blocks with a single well-defined interface.",
+      "derivation": "Avg Fragment Size \\times Clone Group Size",
+      "raw_measurement_formula": "Abstraction Score = (Lines Reducible via Abstraction / Total Duplicated Lines) × 100",
+      "expected_threshold": ">= 80% of duplicated lines are abstractable",
+      "normalization_formula": "Score = Abstraction Score % [gate at 80%]",
+      "execution_frequency": "Daily",
+      "python": {
+        "primary_tool": "jscpd",
+        "secondary_tool": "copydetect",
+        "metric_emitted_directly": "No",
+        "derivation": "Avg Fragment Size \\times Clone Group Size"
+      }
+    },
+    {
+      "id": "code_quality_auditing_code_duplication_regression_focus_mapping",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Code Quality Auditing",
+      "l3_technique": "Code Duplication",
+      "l4_classification": "Risk-Based Testing Prioritization",
+      "l5_metric": "Regression Focus Mapping",
+      "description": "Helps prioritize testing for areas where duplication is high, directing QA resources to verify that all instances of duplicated logic behave identically under stress.",
+      "derivation": "Total Duplicated Tokens / Total Repository Tokens",
+      "raw_measurement_formula": "Regression Focus % = (Duplicated Modules Covered by Regression Tests / Total Duplicated Modules) × 100",
+      "expected_threshold": "100% of duplicated modules included in regression suite",
+      "normalization_formula": "Score = Regression Focus % [gate at 100%]",
+      "execution_frequency": "Daily",
+      "python": {
+        "primary_tool": "jscpd",
+        "secondary_tool": "copydetect",
+        "metric_emitted_directly": "No",
+        "derivation": "Total Duplicated Tokens / Total Repository Tokens"
+      }
+    },
+    {
+      "id": "code_quality_auditing_code_duplication_synchronization_verification",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Code Quality Auditing",
+      "l3_technique": "Code Duplication",
+      "l4_classification": "Maintainability Testing",
+      "l5_metric": "Synchronization Verification",
+      "description": "% of code lines that are duplicated (cloned blocks) across the repository; indicates copy-paste debt",
+      "derivation": "Lines in SYNC fragment / Lines in ASYNC fragment",
+      "raw_measurement_formula": "Duplication % = (Duplicated Lines / Total Lines) × 100",
+      "expected_threshold": "<= 5% duplicated lines preferred",
+      "normalization_formula": "MAX(0, 100 – (Dup% / 5 × 100))  [5% = score 0]",
+      "execution_frequency": "Daily",
+      "python": {
+        "primary_tool": "jscpd",
+        "secondary_tool": "copydetect",
+        "metric_emitted_directly": "No",
+        "derivation": "Lines in SYNC fragment / Lines in ASYNC fragment"
+      }
+    }
+  ]
+}

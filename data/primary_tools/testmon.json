@@ -1,0 +1,33 @@
+{
+  "workbook": "Testable_Strategy_Metrics_Mapping_v0.2_19_may_2026 2.xlsx",
+  "workbook_version": "0.2",
+  "primary_tool": "testmon",
+  "primary_tool_id": "testmon",
+  "metric_count": 1,
+  "secondary_tools": [
+    "Mccabe"
+  ],
+  "metrics": [
+    {
+      "id": "structural_analysis_cyclomatic_complexity_qa_resource_allocation",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Structural Analysis",
+      "l3_technique": "Cyclomatic Complexity",
+      "l4_classification": "Test Prioritization",
+      "l5_metric": "QA Resource Allocation",
+      "description": "It helps managers decide where to send the most experienced testers. Logic with high cognitive complexity is prioritized for deeper testing because it is the most likely place for edge-case bugs to hide.",
+      "derivation": "test_execution_efficiency = tests_saved / max(tests_all, 1)",
+      "raw_measurement_formula": "Regression Risk Score = Count(Modules with MI < 40 AND recently churned) × 25",
+      "expected_threshold": "0 low-MI modules with recent churn",
+      "normalization_formula": "MAX(0, 100 – Regression_Risk_Score)",
+      "execution_frequency": "Every Commit / PR",
+      "python": {
+        "primary_tool": "testmon",
+        "secondary_tool": "Mccabe",
+        "metric_emitted_directly": "No",
+        "derivation": "test_execution_efficiency = tests_saved / max(tests_all, 1)"
+      }
+    }
+  ]
+}

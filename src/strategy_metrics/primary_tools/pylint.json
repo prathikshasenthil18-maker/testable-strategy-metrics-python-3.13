@@ -1,0 +1,286 @@
+{
+  "workbook": "Testable_Strategy_Metrics_Mapping_v0.2_19_may_2026 2.xlsx",
+  "workbook_version": "0.2",
+  "primary_tool": "pylint",
+  "primary_tool_id": "pylint",
+  "metric_count": 13,
+  "secondary_tools": [
+    "flake8",
+    "pyflakes"
+  ],
+  "metrics": [
+    {
+      "id": "static_code_analysis_lint_rule_violations_violation_density_per_kloc",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Static Code Analysis",
+      "l3_technique": "Lint / Rule Violations",
+      "l4_classification": "Rule Detection Test",
+      "l5_metric": "Violation Density per KLOC",
+      "description": "Count of lint violations bucketed by severity (error, warning, info) per 1000 lines of code",
+      "derivation": "N = total number of JSON objects (violations)",
+      "raw_measurement_formula": "Violation Density = (Errors×3 + Warnings×1) / (LOC/1000)",
+      "expected_threshold": "0 blocking errors; < 10 warnings per KLOC",
+      "normalization_formula": "MAX(0, 100 – (Errors×5 + Warnings×1))",
+      "execution_frequency": "Every Commit / PR",
+      "python": {
+        "primary_tool": "pylint",
+        "secondary_tool": "flake8",
+        "metric_emitted_directly": "No",
+        "derivation": "N = total number of JSON objects (violations)"
+      }
+    },
+    {
+      "id": "static_code_analysis_lint_rule_violations_resource_waste_identification",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Static Code Analysis",
+      "l3_technique": "Lint / Rule Violations",
+      "l4_classification": "Unused Variable Detection",
+      "l5_metric": "Resource Waste Identification",
+      "description": "Scans the code for variables that are declared but never referenced in any operation, measuring technical debt from dead allocations that clutter the code and confuse future maintainers.",
+      "derivation": "Total Duplicate Lines = SUM(endLine - line + 1)",
+      "raw_measurement_formula": "Dead Allocation % = (Unused Variables / Total Declared Variables) × 100",
+      "expected_threshold": "< 1% unused variable declarations per module",
+      "normalization_formula": "MAX(0, 100 – (Dead_Allocation% × 50))",
+      "execution_frequency": "Every Commit / PR",
+      "python": {
+        "primary_tool": "pylint",
+        "secondary_tool": "flake8",
+        "metric_emitted_directly": "No",
+        "derivation": "Total Duplicate Lines = SUM(endLine - line + 1)"
+      }
+    },
+    {
+      "id": "static_code_analysis_lint_rule_violations_semantic_consistency_score",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Static Code Analysis",
+      "l3_technique": "Lint / Rule Violations",
+      "l4_classification": "Naming Convention Validation",
+      "l5_metric": "Semantic Consistency Score",
+      "description": "Verifies that variables, functions, and classes follow specific casing and descriptive standards, measuring the guessability and professionalism of the code to improve readability.",
+      "derivation": "Semantic Consistency = 1 - (Unique Rule Types / Total Violations)",
+      "raw_measurement_formula": "Convention Violation Rate = (Naming Violations / Total Named Identifiers) × 100",
+      "expected_threshold": "< 2% naming convention violations across codebase",
+      "normalization_formula": "MAX(0, 100 – (Convention_Violation_Rate × 25))",
+      "execution_frequency": "Every Commit / PR",
+      "python": {
+        "primary_tool": "pylint",
+        "secondary_tool": "flake8",
+        "metric_emitted_directly": "No",
+        "derivation": "Semantic Consistency = 1 - (Unique Rule Types / Total Violations)"
+      }
+    },
+    {
+      "id": "static_code_analysis_lint_rule_violations_syntactic_uniformity_score",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Static Code Analysis",
+      "l3_technique": "Lint / Rule Violations",
+      "l4_classification": "Code Style Rule Validation",
+      "l5_metric": "Syntactic Uniformity Score",
+      "description": "Enforces rules regarding indentation, line length, and whitespace to ensure visual consistency so that code written by multiple developers looks uniform.",
+      "derivation": "Uniformity Score = 1 - (STDEV(duplicate line counts) / AVERAGE(duplicate line counts))",
+      "raw_measurement_formula": "Style Violation Density = Style Violations / (LOC / 1000)",
+      "expected_threshold": "< 5 style violations per KLOC",
+      "normalization_formula": "MAX(0, 100 – (Style_Violation_Density × 10))",
+      "execution_frequency": "Every Commit / PR",
+      "python": {
+        "primary_tool": "pylint",
+        "secondary_tool": "flake8",
+        "metric_emitted_directly": "No",
+        "derivation": "Uniformity Score = 1 - (STDEV(duplicate line counts) / AVERAGE(duplicate line counts))"
+      }
+    },
+    {
+      "id": "static_code_analysis_lint_rule_violations_structural_threshold_monitoring",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Static Code Analysis",
+      "l3_technique": "Lint / Rule Violations",
+      "l4_classification": "Complexity Rule Detection",
+      "l5_metric": "Structural Threshold Monitoring",
+      "description": "Flags functions that exceed specific limits for nesting depth or length, measuring the mental load required to process a module and identifying candidates for immediate refactoring.",
+      "derivation": "Threshold Score = COUNT(duplicate lines > 10) / Total Violations",
+      "raw_measurement_formula": "Complexity Breach Count = Count(Functions exceeding nesting depth > 4 or length > 50 lines)",
+      "expected_threshold": "0 functions breaching nesting or length thresholds",
+      "normalization_formula": "MAX(0, 100 – (Complexity_Breach_Count × 10))",
+      "execution_frequency": "Every Commit / PR",
+      "python": {
+        "primary_tool": "pylint",
+        "secondary_tool": "flake8",
+        "metric_emitted_directly": "No",
+        "derivation": "Threshold Score = COUNT(duplicate lines > 10) / Total Violations"
+      }
+    },
+    {
+      "id": "static_code_analysis_lint_rule_violations_impact_prioritization",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Static Code Analysis",
+      "l3_technique": "Lint / Rule Violations",
+      "l4_classification": "Rule Severity Classification",
+      "l5_metric": "Impact Prioritization",
+      "description": "Categorizes violations as Errors, Warnings, or Info based on their risk level, helping developers focus on fixing critical structural flaws before minor stylistic nitpicks.",
+      "derivation": "Impact Score = Unique Modules / Unique Files",
+      "raw_measurement_formula": "Severity Score = Count(Error violations) × 10 + Count(Warning violations) × 2 + Count(Info violations) × 0.5",
+      "expected_threshold": "0 Error-level violations; < 10 Warning-level per KLOC",
+      "normalization_formula": "MAX(0, 100 – Severity_Score)",
+      "execution_frequency": "Every Commit / PR",
+      "python": {
+        "primary_tool": "pylint",
+        "secondary_tool": "flake8",
+        "metric_emitted_directly": "No",
+        "derivation": "Impact Score = Unique Modules / Unique Files"
+      }
+    },
+    {
+      "id": "static_code_analysis_lint_rule_violations_aggregated_risk_assessment",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Static Code Analysis",
+      "l3_technique": "Lint / Rule Violations",
+      "l4_classification": "Multiple Violations Detection",
+      "l5_metric": "Aggregated Risk Assessment",
+      "description": "Identifies modules that suffer from a high density of different rule breaks, measuring the instability of a file and highlighting parts of the system most likely to contain bugs.",
+      "derivation": "Risk Score = Total Violations * Average Duplicate Lines",
+      "raw_measurement_formula": "Hotfile Score = Count(Files with > 10 violations) × 15 + Count(Files with 5–10 violations) × 5",
+      "expected_threshold": "0 files with > 10 violations; < 5 files in amber range",
+      "normalization_formula": "MAX(0, 100 – Hotfile_Score)",
+      "execution_frequency": "Every Commit / PR",
+      "python": {
+        "primary_tool": "pylint",
+        "secondary_tool": "flake8",
+        "metric_emitted_directly": "No",
+        "derivation": "Risk Score = Total Violations * Average Duplicate Lines"
+      }
+    },
+    {
+      "id": "static_code_analysis_lint_rule_violations_accuracy_tuning",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Static Code Analysis",
+      "l3_technique": "Lint / Rule Violations",
+      "l4_classification": "False Positive Prevention",
+      "l5_metric": "Accuracy Tuning",
+      "description": "Filters out rule violations that are intentional or contextually irrelevant, measuring the reliability of the analysis tool to ensure developers do not ignore valid warnings.",
+      "derivation": "Accuracy = 1 - (Unique Rule IDs - 1) / Total Violations",
+      "raw_measurement_formula": "False Positive Rate % = (Intentionally suppressed violations / Total Flagged Violations) × 100",
+      "expected_threshold": "< 10% suppression rate (high suppression signals misconfigured rules)",
+      "normalization_formula": "MAX(0, 100 – (False_Positive_Rate% × 5))",
+      "execution_frequency": "Every Commit / PR",
+      "python": {
+        "primary_tool": "pylint",
+        "secondary_tool": "flake8",
+        "metric_emitted_directly": "No",
+        "derivation": "Accuracy = 1 - (Unique Rule IDs - 1) / Total Violations"
+      }
+    },
+    {
+      "id": "static_code_analysis_lint_rule_violations_project_specific_enforcement",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Static Code Analysis",
+      "l3_technique": "Lint / Rule Violations",
+      "l4_classification": "Custom Rule Validation",
+      "l5_metric": "Project-Specific Enforcement",
+      "description": "Allows the team to create and enforce unique rules tailored to specific requirements, measuring compliance with internal business logic or architecture that generic tools might miss.",
+      "derivation": "Project Enforcement = Unique Modules / Total Violations",
+      "raw_measurement_formula": "Custom Rule Pass Rate % = (Custom Rule Checks Passing / Total Custom Rule Checks) × 100",
+      "expected_threshold": "100% of project-specific custom rules passing",
+      "normalization_formula": "Score = Custom Rule Pass Rate % [gate at 100%]",
+      "execution_frequency": "Every Commit / PR",
+      "python": {
+        "primary_tool": "pylint",
+        "secondary_tool": "flake8",
+        "metric_emitted_directly": "No",
+        "derivation": "Project Enforcement = Unique Modules / Total Violations"
+      }
+    },
+    {
+      "id": "static_code_analysis_lint_rule_violations_environment_standardization",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Static Code Analysis",
+      "l3_technique": "Lint / Rule Violations",
+      "l4_classification": "Configuration File Handling",
+      "l5_metric": "Environment Standardization",
+      "description": "Manages the configuration files that define which rules are active across the team, ensuring every developer on the project is using the exact same quality settings.",
+      "derivation": "Standardization = Unique Types / Total Violations",
+      "raw_measurement_formula": "Config Drift Score = Count(Devs with lint config deviating from team standard)",
+      "expected_threshold": "0 developers with non-standard lint configuration",
+      "normalization_formula": "MAX(0, 100 – (Config_Drift_Score × 25))",
+      "execution_frequency": "Every Commit / PR",
+      "python": {
+        "primary_tool": "pylint",
+        "secondary_tool": "flake8",
+        "metric_emitted_directly": "No",
+        "derivation": "Standardization = Unique Types / Total Violations"
+      }
+    },
+    {
+      "id": "static_code_analysis_lint_rule_violations_automated_gatekeeping",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Static Code Analysis",
+      "l3_technique": "Lint / Rule Violations",
+      "l4_classification": "CI/CD Integration Validation",
+      "l5_metric": "Automated Gatekeeping",
+      "description": "Runs quality checks automatically during the build process, measuring readiness for merge by blocking any code that fails to meet the minimum quality bar before it can be merged.",
+      "derivation": "Gate = IF(Total Violations > Threshold, \"FAIL\", \"PASS\")",
+      "raw_measurement_formula": "Pipeline Gate Pass Rate % = (Builds passing lint gate / Total Builds) × 100",
+      "expected_threshold": "100% of builds pass lint quality gate before merge",
+      "normalization_formula": "Score = Pipeline Gate Pass Rate % [gate at 100%]",
+      "execution_frequency": "Every Commit / PR",
+      "python": {
+        "primary_tool": "pylint",
+        "secondary_tool": "flake8",
+        "metric_emitted_directly": "No",
+        "derivation": "Gate = IF(Total Violations > Threshold, \"FAIL\", \"PASS\")"
+      }
+    },
+    {
+      "id": "static_code_analysis_lint_rule_violations_quality_audit_trail",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Static Code Analysis",
+      "l3_technique": "Lint / Rule Violations",
+      "l4_classification": "Violation Reporting Validation",
+      "l5_metric": "Quality Audit Trail",
+      "description": "Generates detailed logs of all detected issues including line numbers and fix suggestions, providing a transparent record of code health for reviews and long-term quality tracking.",
+      "derivation": "Audit Score = Filled Fields / Total Expected Fields",
+      "raw_measurement_formula": "Report Coverage % = (Violations with line-number + fix suggestion logged / Total Violations) × 100",
+      "expected_threshold": ">= 95% of violations have complete audit log entry",
+      "normalization_formula": "Score = Report Coverage % [gate at 95%]",
+      "execution_frequency": "Every Commit / PR",
+      "python": {
+        "primary_tool": "pylint",
+        "secondary_tool": "flake8",
+        "metric_emitted_directly": "No",
+        "derivation": "Audit Score = Filled Fields / Total Expected Fields"
+      }
+    },
+    {
+      "id": "data_flow_testing_all_definition_coverage_dead_data_identification",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Data Flow Testing",
+      "l3_technique": "All Definition Coverage",
+      "l4_classification": "Uncovered Definition Detection",
+      "l5_metric": "Dead Data Identification",
+      "description": "Identifies variables that are assigned a value but are never actually used by the program, helping reduce technical debt by spotting zombie variables that clutter memory without purpose.",
+      "derivation": "dead_data_count = unused_variable + unused_import",
+      "raw_measurement_formula": "Dead Variable % = (Definitions with no reachable Use / Total Definitions) × 100",
+      "expected_threshold": "< 5% dead variable definitions in codebase",
+      "normalization_formula": "MAX(0, 100 – (Dead_Variable% × 10))",
+      "execution_frequency": "Daily / Per Sprint",
+      "python": {
+        "primary_tool": "pylint",
+        "secondary_tool": "pyflakes",
+        "metric_emitted_directly": "No",
+        "derivation": "dead_data_count = unused_variable + unused_import"
+      }
+    }
+  ]
+}

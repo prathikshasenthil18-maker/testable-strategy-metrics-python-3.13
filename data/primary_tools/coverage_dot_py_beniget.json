@@ -1,0 +1,222 @@
+{
+  "workbook": "Testable_Strategy_Metrics_Mapping_v0.2_19_may_2026 2.xlsx",
+  "workbook_version": "0.2",
+  "primary_tool": "coverage.py + beniget",
+  "primary_tool_id": "coverage_dot_py_beniget",
+  "metric_count": 10,
+  "secondary_tools": [
+    "all_uses"
+  ],
+  "metrics": [
+    {
+      "id": "data_flow_testing_all_uses_coverage_data_processing_validation",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Data Flow Testing",
+      "l3_technique": "All Uses Coverage",
+      "l4_classification": "Computational Use Detection (C-Use)",
+      "l5_metric": "Data Processing Validation",
+      "description": "Identifies instances where a variable is used in a calculation or output statement, measuring the accuracy of data transformations and ensuring variable values correctly influence final results.",
+      "derivation": "c_use = len([d for d in definitions if d.user_count > 0])",
+      "raw_measurement_formula": "C-Use Coverage % = (Computational DU Pairs Exercised / Total C-Use Pairs) × 100",
+      "expected_threshold": ">= 65% of computational use pairs exercised",
+      "normalization_formula": "Score = C-Use Coverage % [gate at 65%]",
+      "execution_frequency": "Daily / Per Sprint",
+      "python": {
+        "primary_tool": "coverage.py + beniget",
+        "secondary_tool": "all_uses",
+        "metric_emitted_directly": "No",
+        "derivation": "c_use = len([d for d in definitions if d.user_count > 0])"
+      }
+    },
+    {
+      "id": "data_flow_testing_all_uses_coverage_logic_influence_assessment",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Data Flow Testing",
+      "l3_technique": "All Uses Coverage",
+      "l4_classification": "Predicate Use Detection (P-Use)",
+      "l5_metric": "Logic Influence Assessment",
+      "description": "Identifies where a variable is used to determine the outcome of a decision, measuring how data values control the program execution flow and ensuring both True and False outcomes are tested.",
+      "derivation": "p_use = covered_branches",
+      "raw_measurement_formula": "P-Use Coverage % = (Predicate DU Pairs Exercised / Total P-Use Pairs) × 100",
+      "expected_threshold": ">= 65% of predicate use pairs exercised (True + False outcomes)",
+      "normalization_formula": "Score = P-Use Coverage % [gate at 65%]",
+      "execution_frequency": "Daily / Per Sprint",
+      "python": {
+        "primary_tool": "coverage.py + beniget",
+        "secondary_tool": "all_uses",
+        "metric_emitted_directly": "Yes",
+        "derivation": "p_use = covered_branches"
+      }
+    },
+    {
+      "id": "data_flow_testing_all_uses_coverage_path_correlation_mapping",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Data Flow Testing",
+      "l3_technique": "All Uses Coverage",
+      "l4_classification": "Definition-Use Pair Identification",
+      "l5_metric": "Path Correlation Mapping",
+      "description": "Links every definition of a variable to all possible locations where that specific value could be read, creating a map of data influence across the function to ensure no use-case is left untested.",
+      "derivation": "def_use_pairs = sum(d.user_count for d in definitions)",
+      "raw_measurement_formula": "DU Pair Map Coverage % = (Identified and Mapped DU Pairs / Total Estimated DU Pairs) × 100",
+      "expected_threshold": ">= 90% of DU pairs identified and mapped in analysis",
+      "normalization_formula": "Score = DU Pair Map Coverage % [gate at 90%]",
+      "execution_frequency": "Daily / Per Sprint",
+      "python": {
+        "primary_tool": "coverage.py + beniget",
+        "secondary_tool": "all_uses",
+        "metric_emitted_directly": "No",
+        "derivation": "def_use_pairs = sum(d.user_count for d in definitions)"
+      }
+    },
+    {
+      "id": "data_flow_testing_all_uses_coverage_comprehensive_data_proofing",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Data Flow Testing",
+      "l3_technique": "All Uses Coverage",
+      "l4_classification": "All-Uses Coverage Verification",
+      "l5_metric": "Comprehensive Data Proofing",
+      "description": "Confirms that every single identified Definition-Use pair (both c-use and p-use) has been executed at least once, measuring the total thoroughness of the test suite regarding data integrity.",
+      "derivation": "all_uses_coverage = covered_lines / num_statements",
+      "raw_measurement_formula": "Full DU Verification % = (DU Pairs with both C-Use and P-Use tested / Total DU Pairs) × 100",
+      "expected_threshold": ">= 65% of DU pairs fully verified for both use types",
+      "normalization_formula": "Score = Full DU Verification % [gate at 65%]",
+      "execution_frequency": "Daily / Per Sprint",
+      "python": {
+        "primary_tool": "coverage.py + beniget",
+        "secondary_tool": "all_uses",
+        "metric_emitted_directly": "No",
+        "derivation": "all_uses_coverage = covered_lines / num_statements"
+      }
+    },
+    {
+      "id": "data_flow_testing_all_uses_coverage_data_flow_gap_analysis",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Data Flow Testing",
+      "l3_technique": "All Uses Coverage",
+      "l4_classification": "Partial Uses Coverage Detection",
+      "l5_metric": "Data Flow Gap Analysis",
+      "description": "Highlights specific variable uses that have never been reached during testing, helping developers find blind spots where a variable is defined but its impact on a calculation or branch is unverified.",
+      "derivation": "partial_uses = len([d for d in definitions if d.user_count == 0]) + len(missing_lines)",
+      "raw_measurement_formula": "Gap Score = (DU Pairs with no test exercise / Total DU Pairs) × 100",
+      "expected_threshold": "< 35% of DU pairs untested (65% coverage floor)",
+      "normalization_formula": "MAX(0, 100 – Gap_Score)",
+      "execution_frequency": "Daily / Per Sprint",
+      "python": {
+        "primary_tool": "coverage.py + beniget",
+        "secondary_tool": "all_uses",
+        "metric_emitted_directly": "No",
+        "derivation": "partial_uses = len([d for d in definitions if d.user_count == 0]) + len(missing_lines)"
+      }
+    },
+    {
+      "id": "data_flow_testing_all_uses_coverage_ambiguity_resolution",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Data Flow Testing",
+      "l3_technique": "All Uses Coverage",
+      "l4_classification": "Multiple Definitions Handling",
+      "l5_metric": "Ambiguity Resolution",
+      "description": "Tracks variables that are redefined multiple times such as inside a loop or multiple if blocks, measuring the complexity of the data lifecycle to ensure the current value is always the intended one.",
+      "derivation": "multiple_definitions = len([d for d in definitions if d.user_count > 1])",
+      "raw_measurement_formula": "Redefinition Coverage % = (Redefined Variables with all active definitions tested / Total Redefined Variables) × 100",
+      "expected_threshold": ">= 80% of redefined variables tested across all definition states",
+      "normalization_formula": "Score = Redefinition Coverage % [gate at 80%]",
+      "execution_frequency": "Daily / Per Sprint",
+      "python": {
+        "primary_tool": "coverage.py + beniget",
+        "secondary_tool": "all_uses",
+        "metric_emitted_directly": "No",
+        "derivation": "multiple_definitions = len([d for d in definitions if d.user_count > 1])"
+      }
+    },
+    {
+      "id": "data_flow_testing_all_uses_coverage_inter_procedural_tracking",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Data Flow Testing",
+      "l3_technique": "All Uses Coverage",
+      "l4_classification": "Cross-Function Use Detection",
+      "l5_metric": "Inter-procedural Tracking",
+      "description": "Monitors how variables such as arguments or global objects move between different functions, measuring the safety of the interfaces between code modules to prevent data corruption during hand-offs.",
+      "derivation": "cross_function_uses = len([\n    d for d in definitions\n    if len(d.users) > 1\n])",
+      "raw_measurement_formula": "Inter-procedural Coverage % = (Cross-function DU Pairs Exercised / Total Cross-function DU Pairs) × 100",
+      "expected_threshold": ">= 60% of cross-function DU pairs exercised",
+      "normalization_formula": "Score = Inter-procedural Coverage % [gate at 60%]",
+      "execution_frequency": "Daily / Per Sprint",
+      "python": {
+        "primary_tool": "coverage.py + beniget",
+        "secondary_tool": "all_uses",
+        "metric_emitted_directly": "No",
+        "derivation": "cross_function_uses = len([\n    d for d in definitions\n    if len(d.users) > 1\n])"
+      }
+    },
+    {
+      "id": "data_flow_testing_all_uses_coverage_ghost_use_identification",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Data Flow Testing",
+      "l3_technique": "All Uses Coverage",
+      "l4_classification": "Unreachable Use Detection",
+      "l5_metric": "Ghost Use Identification",
+      "description": "Identifies code blocks that attempt to use a variable but can never be executed due to logical constraints, helping clean up technical debt by removing logic that relies on impossible data states.",
+      "derivation": "unreachable_uses = len(missing_lines)",
+      "raw_measurement_formula": "Ghost Use % = (Uses that can never be reached / Total Declared Uses) × 100",
+      "expected_threshold": "< 2% ghost uses in codebase",
+      "normalization_formula": "MAX(0, 100 – (Ghost_Use% × 25))",
+      "execution_frequency": "Daily / Per Sprint",
+      "python": {
+        "primary_tool": "coverage.py + beniget",
+        "secondary_tool": "all_uses",
+        "metric_emitted_directly": "No",
+        "derivation": "unreachable_uses = len(missing_lines)"
+      }
+    },
+    {
+      "id": "data_flow_testing_all_uses_coverage_data_integrity_audit",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Data Flow Testing",
+      "l3_technique": "All Uses Coverage",
+      "l4_classification": "Coverage Reporting Validation",
+      "l5_metric": "Data Integrity Audit",
+      "description": "Provides a detailed report showing which data paths are safe and which are risky, ensuring your MVP meets high-quality standards by providing an audit trail for every variable in the system.",
+      "derivation": "coverage_valid = (covered_lines + len(missing_lines)) == num_statements",
+      "raw_measurement_formula": "Report Completeness % = (DU pairs with full audit record / Total DU Pairs) × 100",
+      "expected_threshold": ">= 90% of DU pairs have complete data integrity audit record",
+      "normalization_formula": "Score = Report Completeness % [gate at 90%]",
+      "execution_frequency": "Daily / Per Sprint",
+      "python": {
+        "primary_tool": "coverage.py + beniget",
+        "secondary_tool": "all_uses",
+        "metric_emitted_directly": "No",
+        "derivation": "coverage_valid = (covered_lines + len(missing_lines)) == num_statements"
+      }
+    },
+    {
+      "id": "data_flow_testing_all_uses_coverage_all_uses_coverage",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Data Flow Testing",
+      "l3_technique": "All Uses Coverage",
+      "l4_classification": "Variable Use Detection",
+      "l5_metric": "All-Uses Coverage %",
+      "description": "% of definition-use pairs (variable defined, then used in computation or predicate) exercised by tests",
+      "derivation": "all_uses_coverage_percent = (\n    len([d for d in definitions if d.user_count > 0]) / len(definitions)\n) * 100",
+      "raw_measurement_formula": "All-Uses Coverage % = (Covered DU Pairs / Total DU Pairs) × 100",
+      "expected_threshold": ">= 65% all-uses coverage",
+      "normalization_formula": "Score = All-Uses Coverage %",
+      "execution_frequency": "Daily / Per Sprint",
+      "python": {
+        "primary_tool": "coverage.py + beniget",
+        "secondary_tool": "all_uses",
+        "metric_emitted_directly": "No",
+        "derivation": "all_uses_coverage_percent = (\n    len([d for d in definitions if d.user_count > 0]) / len(definitions)\n) * 100"
+      }
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "workbook": "Testable_Strategy_Metrics_Mapping_v0.2_19_may_2026 2.xlsx",
+  "workbook_version": "0.2",
+  "primary_tool": "CrossHair",
+  "primary_tool_id": "crosshair",
+  "metric_count": 1,
+  "secondary_tools": [
+    "pyflakes"
+  ],
+  "metrics": [
+    {
+      "id": "data_flow_testing_all_definition_coverage_null_and_boundary_flow_analysis",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Data Flow Testing",
+      "l3_technique": "All Definition Coverage",
+      "l4_classification": "Edge Case Handling",
+      "l5_metric": "Null and Boundary Flow Analysis",
+      "description": "Measures how the data flow reacts when a definition results in an unexpected state such as None or an overflow, identifying risks where valid variable definitions might lead to a crash at use.",
+      "derivation": "boundary_issue_ratio = (\n    functions_with_counterexample / max(total_functions_checked, 1)\n)",
+      "raw_measurement_formula": "Null Flow Risk Score = Count(Definitions reaching a Use with no null/boundary guard) × 10",
+      "expected_threshold": "0 unguarded null or boundary flows from definition to use",
+      "normalization_formula": "MAX(0, 100 – Null_Flow_Risk_Score)",
+      "execution_frequency": "Daily / Per Sprint",
+      "python": {
+        "primary_tool": "CrossHair",
+        "secondary_tool": "pyflakes",
+        "metric_emitted_directly": "No",
+        "derivation": "boundary_issue_ratio = (\n    functions_with_counterexample / max(total_functions_checked, 1)\n)"
+      }
+    }
+  ]
+}

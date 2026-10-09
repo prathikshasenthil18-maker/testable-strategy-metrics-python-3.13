@@ -1,0 +1,33 @@
+{
+  "workbook": "Testable_Strategy_Metrics_Mapping_v0.2_19_may_2026 2.xlsx",
+  "workbook_version": "0.2",
+  "primary_tool": "Radon/Lizard",
+  "primary_tool_id": "radon_lizard",
+  "metric_count": 1,
+  "secondary_tools": [
+    "Mccabe"
+  ],
+  "metrics": [
+    {
+      "id": "structural_analysis_cyclomatic_complexity_technical_debt_impact",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Structural Analysis",
+      "l3_technique": "Cyclomatic Complexity",
+      "l4_classification": "Maintainability Analysis",
+      "l5_metric": "Technical Debt Impact",
+      "description": "It measures how likely a developer is to introduce a bug while trying to fix another one. High complexity scores here identify code that is \"brittle\" and expensive to change or support over time.",
+      "derivation": "technical_debt = sum(ccn_values)",
+      "raw_measurement_formula": "MI Delta = AVG(MI_Current_Sprint) – AVG(MI_Previous_Sprint)",
+      "expected_threshold": "MI Delta >= 0 (no degradation); flag if delta < -3",
+      "normalization_formula": "MAX(0, 100 + (MI_Delta × 5)) capped 0–100",
+      "execution_frequency": "Every Commit / PR",
+      "python": {
+        "primary_tool": "Radon/Lizard",
+        "secondary_tool": "Mccabe",
+        "metric_emitted_directly": "No",
+        "derivation": "technical_debt = sum(ccn_values)"
+      }
+    }
+  ]
+}

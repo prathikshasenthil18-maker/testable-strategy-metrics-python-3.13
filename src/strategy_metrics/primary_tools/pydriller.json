@@ -1,0 +1,139 @@
+{
+  "workbook": "Testable_Strategy_Metrics_Mapping_v0.2_19_may_2026 2.xlsx",
+  "workbook_version": "0.2",
+  "primary_tool": "pydriller",
+  "primary_tool_id": "pydriller",
+  "metric_count": 6,
+  "secondary_tools": [
+    "git_churn",
+    "pyflakes"
+  ],
+  "metrics": [
+    {
+      "id": "data_flow_testing_all_definition_coverage_audit_trail_verification",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Data Flow Testing",
+      "l3_technique": "All Definition Coverage",
+      "l4_classification": "Reporting Validation",
+      "l5_metric": "Audit Trail Verification",
+      "description": "Provides a verifiable report of the variable state at every stage of execution for debugging and compliance, ensuring that any data-related failure can be traced back to its specific definition point.",
+      "derivation": "audit_activity = insertions + deletions",
+      "raw_measurement_formula": "Audit Completeness % = (Variable state transitions logged and traceable / Total DU pairs) × 100",
+      "expected_threshold": ">= 90% of DU pairs have traceable execution audit record",
+      "normalization_formula": "Score = Audit Completeness % [gate at 90%]",
+      "execution_frequency": "Daily / Per Sprint",
+      "python": {
+        "primary_tool": "pydriller",
+        "secondary_tool": "pyflakes",
+        "metric_emitted_directly": "No",
+        "derivation": "audit_activity = insertions + deletions"
+      }
+    },
+    {
+      "id": "development_process_analysis_code_churn_code_churn_score",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Development Process Analysis",
+      "l3_technique": "Code Churn",
+      "l4_classification": "Risk-Based Testing Prioritization",
+      "l5_metric": "Code Churn Score",
+      "description": "Rate of code change (lines added + deleted) over a rolling window; high churn signals instability and elevated regression risk",
+      "derivation": "Code Churn Score = lines",
+      "raw_measurement_formula": "Churn = (Lines Added + Lines Deleted) / Total LOC over rolling 30-day window",
+      "expected_threshold": "< 30% churn per sprint; flag modules with > 50%",
+      "normalization_formula": "MAX(0, 100 – (Churn% × 2))  [50% churn = 0 pts]",
+      "execution_frequency": "Daily",
+      "python": {
+        "primary_tool": "pydriller",
+        "secondary_tool": "git_churn",
+        "metric_emitted_directly": "Yes",
+        "derivation": "Code Churn Score = lines"
+      }
+    },
+    {
+      "id": "development_process_analysis_code_churn_impact_driven_verification",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Development Process Analysis",
+      "l3_technique": "Code Churn",
+      "l4_classification": "Regression Testing Focus",
+      "l5_metric": "Impact-Driven Verification",
+      "description": "Isolates specific modules that have undergone recent modifications, allowing QA to focus regression suites only on affected areas to prevent existing features from breaking during updates.",
+      "derivation": "impact_score = (insertions + deletions) / max(files, 1)",
+      "raw_measurement_formula": "Regression Coverage % = (High-Churn Modules in Regression Suite / Total High-Churn Modules) × 100",
+      "expected_threshold": "100% of modules with churn > 30% included in regression suite",
+      "normalization_formula": "Score = Regression Coverage % [gate at 100%]",
+      "execution_frequency": "Daily",
+      "python": {
+        "primary_tool": "pydriller",
+        "secondary_tool": "git_churn",
+        "metric_emitted_directly": "No",
+        "derivation": "impact_score = (insertions + deletions) / max(files, 1)"
+      }
+    },
+    {
+      "id": "development_process_analysis_code_churn_fault_probability_modeling",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Development Process Analysis",
+      "l3_technique": "Code Churn",
+      "l4_classification": "Defect Prediction",
+      "l5_metric": "Fault Probability Modeling",
+      "description": "Uses historical churn data to predict where future bugs will likely occur, measuring the correlation between high change volume and defect density as an early warning system for unstable modules.",
+      "derivation": "fault_probability = (insertions + deletions) * complexity",
+      "raw_measurement_formula": "Fault Probability Score = Churn% × Defect_Density (bugs per KLOC) over rolling 30-day window",
+      "expected_threshold": "Fault Probability Score < 5 (Churn% × Defect_Density)",
+      "normalization_formula": "MAX(0, 100 – (Fault_Probability_Score × 10))",
+      "execution_frequency": "Daily",
+      "python": {
+        "primary_tool": "pydriller",
+        "secondary_tool": "git_churn",
+        "metric_emitted_directly": "No",
+        "derivation": "fault_probability = (insertions + deletions) * complexity"
+      }
+    },
+    {
+      "id": "development_process_analysis_code_churn_validation_suite_updates",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Development Process Analysis",
+      "l3_technique": "Code Churn",
+      "l4_classification": "Test Case Maintenance Identification",
+      "l5_metric": "Validation Suite Updates",
+      "description": "Identifies when code has changed so significantly that existing test cases are likely outdated or irrelevant, signaling when tests need to be rewritten to maintain accuracy.",
+      "derivation": "test_impact_score = files",
+      "raw_measurement_formula": "Stale Test % = (Test Files not updated despite source churn > 20% / Total Test Files) × 100",
+      "expected_threshold": "< 5% of test files stale relative to churned source modules",
+      "normalization_formula": "MAX(0, 100 – (Stale_Test% × 10))",
+      "execution_frequency": "Daily",
+      "python": {
+        "primary_tool": "pydriller",
+        "secondary_tool": "git_churn",
+        "metric_emitted_directly": "Yes",
+        "derivation": "test_impact_score = files"
+      }
+    },
+    {
+      "id": "development_process_analysis_code_churn_side_effect_mapping",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Development Process Analysis",
+      "l3_technique": "Code Churn",
+      "l4_classification": "Change Impact Analysis",
+      "l5_metric": "Side Effect Mapping",
+      "description": "Measures the ripple effect of a code change by identifying all connected modules that may be affected, helping developers understand the full scope before merging to prevent unintended consequences.",
+      "derivation": "side_effect_scope = sum(len(file.changed_methods) for file in modified_files)",
+      "raw_measurement_formula": "Impact Coverage % = (Affected Downstream Modules Regression-Tested / Total Identified Downstream Modules) × 100",
+      "expected_threshold": "100% of downstream impacted modules included in test run",
+      "normalization_formula": "Score = Impact Coverage % [gate at 100%]",
+      "execution_frequency": "Daily",
+      "python": {
+        "primary_tool": "pydriller",
+        "secondary_tool": "git_churn",
+        "metric_emitted_directly": "No",
+        "derivation": "side_effect_scope = sum(len(file.changed_methods) for file in modified_files)"
+      }
+    }
+  ]
+}

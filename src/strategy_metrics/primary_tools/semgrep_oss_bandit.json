@@ -1,0 +1,160 @@
+{
+  "workbook": "Testable_Strategy_Metrics_Mapping_v0.2_19_may_2026 2.xlsx",
+  "workbook_version": "0.2",
+  "primary_tool": "Semgrep OSS + Bandit",
+  "primary_tool_id": "semgrep_oss_bandit",
+  "metric_count": 7,
+  "secondary_tools": [
+    "bandit",
+    "semgrep"
+  ],
+  "metrics": [
+    {
+      "id": "security_white_box_testing_static_vulnerabilities_sast_best_practice_compliance",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Security White-box Testing",
+      "l3_technique": "Static Vulnerabilities (SAST)",
+      "l4_classification": "Secure Coding Validation",
+      "l5_metric": "Best Practice Compliance",
+      "description": "Checks the code against industry-standard secure coding guidelines like OWASP, ensuring developers use safe functions and avoid dangerous coding habits that lead to vulnerabilities.",
+      "derivation": "Compliance Score =\n1 - ((Semgrep ERROR + Bandit HIGH + Bandit MEDIUM) / loc)",
+      "raw_measurement_formula": "Compliance Score = (OWASP-Compliant Functions / Total Functions) × 100",
+      "expected_threshold": ">= 95% of functions compliant with secure coding guidelines",
+      "normalization_formula": "Score = Compliance Score % [gate at 95%]",
+      "execution_frequency": "Every Commit / PR",
+      "python": {
+        "primary_tool": "Semgrep OSS\n+\nBandit",
+        "secondary_tool": "semgrep",
+        "metric_emitted_directly": "No",
+        "derivation": "Compliance Score =\n1 - ((Semgrep ERROR + Bandit HIGH + Bandit MEDIUM) / loc)"
+      }
+    },
+    {
+      "id": "security_white_box_testing_static_vulnerabilities_sast_entry_point_sanitization",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Security White-box Testing",
+      "l3_technique": "Static Vulnerabilities (SAST)",
+      "l4_classification": "Input Validation Testing",
+      "l5_metric": "Entry Point Sanitization",
+      "description": "Measures how effectively the code cleans data coming from external sources, identifying locations where user input is used directly in sensitive operations without being checked for malicious content.",
+      "derivation": "Entry Points =\ncount(Semgrep injection-related results)",
+      "raw_measurement_formula": "Sanitization Coverage % = (Sanitized Entry Points / Total External Entry Points) × 100",
+      "expected_threshold": "100% of external entry points have input sanitization",
+      "normalization_formula": "Score = Sanitization Coverage % [gate at 100%]",
+      "execution_frequency": "Every Commit / PR",
+      "python": {
+        "primary_tool": "Semgrep OSS\n+\nBandit",
+        "secondary_tool": "bandit",
+        "metric_emitted_directly": "No",
+        "derivation": "Entry Points =\ncount(Semgrep injection-related results)"
+      }
+    },
+    {
+      "id": "security_white_box_testing_static_vulnerabilities_sast_sensitive_information_tracking",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Security White-box Testing",
+      "l3_technique": "Static Vulnerabilities (SAST)",
+      "l4_classification": "Data Flow Security Analysis",
+      "l5_metric": "Sensitive Information Tracking",
+      "description": "Tracks the movement of sensitive data through the application, ensuring private data is encrypted or masked and never leaks into logs or insecure output streams.",
+      "derivation": "Sensitive Exposure Count =\ncount(Semgrep secret-related results)",
+      "raw_measurement_formula": "Data Leak Score = Count(Sensitive Data Paths reaching insecure output) × 30",
+      "expected_threshold": "0 sensitive data paths reaching logs or unencrypted output",
+      "normalization_formula": "MAX(0, 100 – Data_Leak_Score) [any leak = BLOCK]",
+      "execution_frequency": "Every Commit / PR",
+      "python": {
+        "primary_tool": "Semgrep OSS\n+\nBandit",
+        "secondary_tool": "bandit",
+        "metric_emitted_directly": "No",
+        "derivation": "Sensitive Exposure Count =\ncount(Semgrep secret-related results)"
+      }
+    },
+    {
+      "id": "security_white_box_testing_static_vulnerabilities_sast_access_control_verification",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Security White-box Testing",
+      "l3_technique": "Static Vulnerabilities (SAST)",
+      "l4_classification": "Authentication & Authorization Weakness Detection",
+      "l5_metric": "Access Control Verification",
+      "description": "Identifies flaws in how the application verifies user identity and permissions, flagging hardcoded passwords, weak session management, or logic that allows users to bypass security checks.",
+      "derivation": "Access Control Risk =\ncount(Semgrep auth-related results)",
+      "raw_measurement_formula": "Auth Weakness Score = Count(Auth Bypass Paths) × 25 + Count(Weak Session Issues) × 10",
+      "expected_threshold": "0 auth bypass paths; 0 weak session management findings",
+      "normalization_formula": "MAX(0, 100 – Auth_Weakness_Score)",
+      "execution_frequency": "Every Commit / PR",
+      "python": {
+        "primary_tool": "Semgrep OSS\n+\nBandit",
+        "secondary_tool": "bandit",
+        "metric_emitted_directly": "No",
+        "derivation": "Access Control Risk =\ncount(Semgrep auth-related results)"
+      }
+    },
+    {
+      "id": "security_white_box_testing_static_vulnerabilities_sast_supply_chain_security",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Security White-box Testing",
+      "l3_technique": "Static Vulnerabilities (SAST)",
+      "l4_classification": "Dependency & Library Vulnerability Detection",
+      "l5_metric": "Supply Chain Security",
+      "description": "Checks third-party libraries against databases of known security issues, measuring the risk of inherited vulnerabilities that exist in code you did not write yourself.",
+      "derivation": "Supply Chain Risk =\ncount(Semgrep dependency-related results)",
+      "raw_measurement_formula": "Supply Chain Score = Count(Vuln Library Imports) × 20 + Count(Outdated Imports) × 5",
+      "expected_threshold": "0 vulnerable library imports in production build",
+      "normalization_formula": "MAX(0, 100 – Supply_Chain_Score)",
+      "execution_frequency": "Every Commit / PR",
+      "python": {
+        "primary_tool": "Semgrep OSS\n+\nBandit",
+        "secondary_tool": "semgrep",
+        "metric_emitted_directly": "No",
+        "derivation": "Supply Chain Risk =\ncount(Semgrep dependency-related results)"
+      }
+    },
+    {
+      "id": "security_white_box_testing_static_vulnerabilities_sast_regulatory_alignment",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Security White-box Testing",
+      "l3_technique": "Static Vulnerabilities (SAST)",
+      "l4_classification": "Compliance & Security Standard Validation",
+      "l5_metric": "Regulatory Alignment",
+      "description": "Verifies if the code meets specific regulatory requirements such as GDPR or HIPAA, providing a report on whether the application is legally and technically secure based on external standards.",
+      "derivation": "Regulatory Coverage =\ncount(Semgrep results with CWE/OWASP)",
+      "raw_measurement_formula": "Regulatory Score = (Controls Passing Scan / Total Required Controls) × 100",
+      "expected_threshold": ">= 100% of regulatory controls passing static scan",
+      "normalization_formula": "Score = Regulatory Score % [gate at 100%]",
+      "execution_frequency": "Every Commit / PR",
+      "python": {
+        "primary_tool": "Semgrep OSS\n+\nBandit",
+        "secondary_tool": "bandit",
+        "metric_emitted_directly": "No",
+        "derivation": "Regulatory Coverage =\ncount(Semgrep results with CWE/OWASP)"
+      }
+    },
+    {
+      "id": "security_white_box_testing_static_vulnerabilities_sast_exploit_surface_identification",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Security White-box Testing",
+      "l3_technique": "Static Vulnerabilities (SAST)",
+      "l4_classification": "Security Vulnerability Detection",
+      "l5_metric": "Exploit Surface Identification",
+      "description": "Count of high/critical severity vulnerabilities found by static analysis; identifies injection risks, insecure patterns, auth weaknesses",
+      "derivation": "Exploit Surface =\nSemgrep ERROR + Semgrep WARNING\n+ Bandit HIGH + Bandit MEDIUM",
+      "raw_measurement_formula": "SAST Score = Count(Critical)×25 + Count(High)×10 + Count(Medium)×3 + Count(Low)×1",
+      "expected_threshold": "0 Critical; 0 High findings per build",
+      "normalization_formula": "MAX(0, 100 – SAST_Score)",
+      "execution_frequency": "Every Commit / PR",
+      "python": {
+        "primary_tool": "Semgrep OSS\n+\nBandit",
+        "secondary_tool": "bandit",
+        "metric_emitted_directly": "No",
+        "derivation": "Exploit Surface =\nSemgrep ERROR + Semgrep WARNING\n+ Bandit HIGH + Bandit MEDIUM"
+      }
+    }
+  ]
+}

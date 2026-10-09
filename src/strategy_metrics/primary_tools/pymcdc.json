@@ -1,0 +1,33 @@
+{
+  "workbook": "Testable_Strategy_Metrics_Mapping_v0.2_19_may_2026 2.xlsx",
+  "workbook_version": "0.2",
+  "primary_tool": "Pymcdc",
+  "primary_tool_id": "pymcdc",
+  "metric_count": 1,
+  "secondary_tools": [
+    "Mccabe"
+  ],
+  "metrics": [
+    {
+      "id": "structural_analysis_cyclomatic_complexity_logical_sub_expression_validation",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Structural Analysis",
+      "l3_technique": "Cyclomatic Complexity",
+      "l4_classification": "Condition Coverage",
+      "l5_metric": "Logical Sub-expression Validation",
+      "description": "It measures whether each individual component of a compound logical statement (e.g., in if A and B, checking A and B separately) has been evaluated as both True and False.",
+      "derivation": "condition_coverage = covered_mcdc_conditions / max(total_mcdc_conditions, 1)",
+      "raw_measurement_formula": "Refactor ROI Score = Count(Modules with MI < 40) × 20 + Count(Modules with MI 40–64) × 5",
+      "expected_threshold": "0 modules in red zone (MI < 40); < 10 in yellow zone",
+      "normalization_formula": "MAX(0, 100 – Refactor_ROI_Score)",
+      "execution_frequency": "Every Commit / PR",
+      "python": {
+        "primary_tool": "Pymcdc",
+        "secondary_tool": "Mccabe",
+        "metric_emitted_directly": "No",
+        "derivation": "condition_coverage = covered_mcdc_conditions / max(total_mcdc_conditions, 1)"
+      }
+    }
+  ]
+}

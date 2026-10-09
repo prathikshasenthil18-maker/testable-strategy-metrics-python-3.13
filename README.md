@@ -5,6 +5,7 @@ Simple Python **3.13** library and CLI built from **Testable Strategy Metrics Ma
 It ships:
 
 - **103 White Box metrics** with **Python primary/secondary tools**, sheet derivations, thresholds, and 0–100 normalization text (`data/python_metrics.json`).
+- **16 primary-tool bundles** — full metric rows per workbook primary name (`data/primary_tools/*.json`, index in `data/primary_tools/manifest.json`).
 - A small **derivation engine** that evaluates workbook formulas when you supply raw inputs.
 
 ## Requirements
@@ -26,11 +27,21 @@ Place the xlsx at the path in `scripts/extract_workbook.py` (or edit `WORKBOOK`)
 python scripts/extract_workbook.py
 ```
 
+Rebuild primary-tool files only (after editing the catalog JSON):
+
+```bash
+python scripts/build_primary_tools_data.py
+```
+
 ## CLI
 
 ```bash
 # Python primary tools → metric counts
 strategy-metrics list-tools
+
+# Full data for one primary tool (slug or workbook name)
+strategy-metrics show-tool Beniget
+strategy-metrics show-tool coverage_dot_py
 
 # Inspect one metric (tools + derivation)
 strategy-metrics show structural_analysis_cyclomatic_complexity_decision_outcome_verification

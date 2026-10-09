@@ -1,0 +1,160 @@
+{
+  "workbook": "Testable_Strategy_Metrics_Mapping_v0.2_19_may_2026 2.xlsx",
+  "workbook_version": "0.2",
+  "python_metric_count": 103,
+  "primary_tool_count": 16,
+  "tools": [
+    {
+      "primary_tool": "Beniget",
+      "primary_tool_id": "beniget",
+      "metric_count": 2,
+      "secondary_tools": [
+        "pyflakes"
+      ],
+      "file": "beniget.json"
+    },
+    {
+      "primary_tool": "cognitive-ast",
+      "primary_tool_id": "cognitive_ast",
+      "metric_count": 7,
+      "secondary_tools": [
+        "radon_cc"
+      ],
+      "file": "cognitive_ast.json"
+    },
+    {
+      "primary_tool": "cosmic-ray",
+      "primary_tool_id": "cosmic_ray",
+      "metric_count": 7,
+      "secondary_tools": [
+        "mutmut"
+      ],
+      "file": "cosmic_ray.json"
+    },
+    {
+      "primary_tool": "Coverage.py",
+      "primary_tool_id": "coverage_dot_py",
+      "metric_count": 29,
+      "secondary_tools": [
+        "coverage.py + ast paths",
+        "coverage_paths",
+        "coveragepy",
+        "Mccabe",
+        "pytest-cov",
+        "pytest-cov --cov-branch"
+      ],
+      "file": "coverage_dot_py.json"
+    },
+    {
+      "primary_tool": "coverage.py",
+      "primary_tool_id": "coverage_dot_py__coverage_py",
+      "metric_count": 1,
+      "secondary_tools": [
+        "pyflakes"
+      ],
+      "file": "coverage_dot_py__coverage_py.json"
+    },
+    {
+      "primary_tool": "coverage.py + beniget",
+      "primary_tool_id": "coverage_dot_py_beniget",
+      "metric_count": 10,
+      "secondary_tools": [
+        "all_uses"
+      ],
+      "file": "coverage_dot_py_beniget.json"
+    },
+    {
+      "primary_tool": "Crosshair",
+      "primary_tool_id": "crosshair__crosshair",
+      "metric_count": 2,
+      "secondary_tools": [
+        "Mccabe"
+      ],
+      "file": "crosshair__crosshair.json"
+    },
+    {
+      "primary_tool": "CrossHair",
+      "primary_tool_id": "crosshair",
+      "metric_count": 1,
+      "secondary_tools": [
+        "pyflakes"
+      ],
+      "file": "crosshair.json"
+    },
+    {
+      "primary_tool": "jscpd",
+      "primary_tool_id": "jscpd",
+      "metric_count": 7,
+      "secondary_tools": [
+        "copydetect"
+      ],
+      "file": "jscpd.json"
+    },
+    {
+      "primary_tool": "pip-audit",
+      "primary_tool_id": "pip_audit",
+      "metric_count": 8,
+      "secondary_tools": [
+        "safety"
+      ],
+      "file": "pip_audit.json"
+    },
+    {
+      "primary_tool": "pydriller",
+      "primary_tool_id": "pydriller",
+      "metric_count": 6,
+      "secondary_tools": [
+        "git_churn",
+        "pyflakes"
+      ],
+      "file": "pydriller.json"
+    },
+    {
+      "primary_tool": "pylint",
+      "primary_tool_id": "pylint",
+      "metric_count": 13,
+      "secondary_tools": [
+        "flake8",
+        "pyflakes"
+      ],
+      "file": "pylint.json"
+    },
+    {
+      "primary_tool": "Pymcdc",
+      "primary_tool_id": "pymcdc",
+      "metric_count": 1,
+      "secondary_tools": [
+        "Mccabe"
+      ],
+      "file": "pymcdc.json"
+    },
+    {
+      "primary_tool": "Radon/Lizard",
+      "primary_tool_id": "radon_lizard",
+      "metric_count": 1,
+      "secondary_tools": [
+        "Mccabe"
+      ],
+      "file": "radon_lizard.json"
+    },
+    {
+      "primary_tool": "Semgrep OSS + Bandit",
+      "primary_tool_id": "semgrep_oss_bandit",
+      "metric_count": 7,
+      "secondary_tools": [
+        "bandit",
+        "semgrep"
+      ],
+      "file": "semgrep_oss_bandit.json"
+    },
+    {
+      "primary_tool": "testmon",
+      "primary_tool_id": "testmon",
+      "metric_count": 1,
+      "secondary_tools": [
+        "Mccabe"
+      ],
+      "file": "testmon.json"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "workbook": "Testable_Strategy_Metrics_Mapping_v0.2_19_may_2026 2.xlsx",
+  "workbook_version": "0.2",
+  "primary_tool": "Beniget",
+  "primary_tool_id": "beniget",
+  "metric_count": 2,
+  "secondary_tools": [
+    "pyflakes"
+  ],
+  "metrics": [
+    {
+      "id": "data_flow_testing_all_definition_coverage_all_defs_coverage",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Data Flow Testing",
+      "l3_technique": "All Definition Coverage",
+      "l4_classification": "Variable Definition Detection",
+      "l5_metric": "All-Defs Coverage %",
+      "description": "% of variable definition points (where variables are assigned) that are exercised by at least one test path",
+      "derivation": "all_defs_coverage = (used_definitions / max(definitions, 1)) * 100",
+      "raw_measurement_formula": "All-Defs Coverage % = (Definition Points Covered / Total Definition Points) × 100",
+      "expected_threshold": ">= 75% all-definition coverage",
+      "normalization_formula": "Score = All-Defs Coverage %",
+      "execution_frequency": "Daily / Per Sprint",
+      "python": {
+        "primary_tool": "Beniget",
+        "secondary_tool": "pyflakes",
+        "metric_emitted_directly": "No",
+        "derivation": "all_defs_coverage = (used_definitions / max(definitions, 1)) * 100"
+      }
+    },
+    {
+      "id": "data_flow_testing_all_definition_coverage_du_path_validation",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Data Flow Testing",
+      "l3_technique": "All Definition Coverage",
+      "l4_classification": "Coverage Measurement",
+      "l5_metric": "DU-Path Validation",
+      "description": "Calculates the percentage of Definition-Use pairs that have been successfully exercised by your test suite, providing a deeper quality check than just seeing if a line was executed.",
+      "derivation": "du_path_validation = covered_lines / max(num_statements, 1)",
+      "raw_measurement_formula": "DU-Path Coverage % = (DU Pairs Exercised / Total DU Pairs) × 100",
+      "expected_threshold": ">= 65% of all DU pairs exercised by test suite",
+      "normalization_formula": "Score = DU-Path Coverage % [gate at 65%]",
+      "execution_frequency": "Daily / Per Sprint",
+      "python": {
+        "primary_tool": "Beniget",
+        "secondary_tool": "pyflakes",
+        "metric_emitted_directly": "No",
+        "derivation": "du_path_validation = covered_lines / max(num_statements, 1)"
+      }
+    }
+  ]
+}

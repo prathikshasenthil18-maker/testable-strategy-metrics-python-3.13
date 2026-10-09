@@ -6,14 +6,40 @@ import argparse
 import json
 import sys
 
-from strategy_metrics.catalog import load_metrics, primary_tools_index
+from strategy_metrics.catalog import (
+    load_metrics,
+    load_primary_tool_bundle,
+    load_primary_tools_manifest,
+    primary_tools_index,
+)
+from strategy_metrics.tool_ids import primary_tool_slug
 from strategy_metrics.derivations import apply_metric_pipeline
 
 
 def cmd_list_tools() -> int:
-    index = primary_tools_index()
-    for tool in sorted(index, key=str.lower):
-        print(f"{tool}\t{len(index[tool])} metrics")
+    manifest = load_primary_tools_manifest()
+    for entry in manifest.get("tools", []):
+        print(
+            f"{entry['primary_tool_id']}\t{entry['primary_tool']}\t{entry['metric_count']} metrics"
+        )
+    return 0
+
+
+def cmd_show_tool(tool_ref: str) -> int:
+    for loader in (
+        lambda: load_primary_tool_bundle(primary_tool_id=tool_ref),
+        lambda: load_primary_tool_bundle(primary_tool=tool_ref),
+        lambda: load_primary_tool_bundle(primary_tool_id=primary_tool_slug(tool_ref)),
+    ):
+        try:
+            bundle = loader()
+            break
+        except (ValueError, FileNotFoundError, OSError):
+            bundle = None
+    else:
+        print(f"Unknown primary tool: {tool_ref}", file=sys.stderr)
+        return 1
+    print(json.dumps(bundle, indent=2, ensure_ascii=False))
     return 0
 
 
@@ -48,6 +74,12 @@ def main(argv: list[str] | None = None) -> int:
 
     sub.add_parser("list-tools", help="List Python primary tools and metric counts")
 
+    p_tool = sub.add_parser("show-tool", help="Show full data bundle for one primary tool")
+    p_tool.add_argument(
+        "tool",
+        help="primary_tool_id (slug), or exact workbook name e.g. 'Coverage.py'",
+    )
+
     p_show = sub.add_parser("show", help="Show one metric by id")
     p_show.add_argument("metric_id")
 
@@ -61,6 +93,8 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     if args.command == "list-tools":
         return cmd_list_tools()
+    if args.command == "show-tool":
+        return cmd_show_tool(args.tool)
     if args.command == "show":
         return cmd_show(args.metric_id)
     if args.command == "apply":

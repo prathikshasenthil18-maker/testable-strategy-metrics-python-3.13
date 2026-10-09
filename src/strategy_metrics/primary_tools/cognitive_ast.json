@@ -1,0 +1,159 @@
+{
+  "workbook": "Testable_Strategy_Metrics_Mapping_v0.2_19_may_2026 2.xlsx",
+  "workbook_version": "0.2",
+  "primary_tool": "cognitive-ast",
+  "primary_tool_id": "cognitive_ast",
+  "metric_count": 7,
+  "secondary_tools": [
+    "radon_cc"
+  ],
+  "metrics": [
+    {
+      "id": "readability_maintainability_cognitive_complexity_technical_debt_impact",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Readability / Maintainability",
+      "l3_technique": "Cognitive Complexity",
+      "l4_classification": "Maintainability Evaluation",
+      "l5_metric": "Technical Debt Impact",
+      "description": "Evaluates how likely a developer is to introduce a bug while fixing another. High complexity scores flag code that is brittle and expensive to change or support over time.",
+      "derivation": "cc - cognitive complexity value\nTechnical Debt Score = min(100, cc * 5)",
+      "raw_measurement_formula": "Debt Score = Count(Units with CogCC > 15) × 10 + Count(Units with CogCC 10–15) × 3",
+      "expected_threshold": "0 units exceeding CogCC 15; < 5 units in amber range (10–15)",
+      "normalization_formula": "MAX(0, 100 – Debt_Score)",
+      "execution_frequency": "Every Commit / PR",
+      "python": {
+        "primary_tool": "cognitive-ast",
+        "secondary_tool": "radon_cc",
+        "metric_emitted_directly": "No",
+        "derivation": "cc - cognitive complexity value\nTechnical Debt Score = min(100, cc * 5)"
+      }
+    },
+    {
+      "id": "readability_maintainability_cognitive_complexity_unit_test_complexity",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Readability / Maintainability",
+      "l3_technique": "Cognitive Complexity",
+      "l4_classification": "Testability Analysis",
+      "l5_metric": "Unit Test Complexity",
+      "description": "Measures the difficulty of writing a test that covers all possible states. If code is hard to understand, it is mathematically harder to ensure the test suite is meaningful.",
+      "derivation": "cc - cognitive complexity value\nUnit Test Complexity = cc + 1",
+      "raw_measurement_formula": "Test Complexity Score = AVG(CogCC) across all testable units in module",
+      "expected_threshold": "AVG CogCC <= 10 per module",
+      "normalization_formula": "MAX(0, 100 – ((AVG_CogCC – 1) / 9 × 100)) capped 0–100",
+      "execution_frequency": "Every Commit / PR",
+      "python": {
+        "primary_tool": "cognitive-ast",
+        "secondary_tool": "radon_cc",
+        "metric_emitted_directly": "No",
+        "derivation": "cc - cognitive complexity value\nUnit Test Complexity = cc + 1"
+      }
+    },
+    {
+      "id": "readability_maintainability_cognitive_complexity_defect_probability",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Readability / Maintainability",
+      "l3_technique": "Cognitive Complexity",
+      "l4_classification": "Risk Detection",
+      "l5_metric": "Defect Probability",
+      "description": "Identifies hotspots in the code where the logic is so dense that human error is almost guaranteed, acting as an early warning system before the code is deployed.",
+      "derivation": "cc - cognitive complexity value\nDefect Probability (%) = min(90, cc * 4)",
+      "raw_measurement_formula": "Hotspot Count = Count(functions where CogCC > 20)",
+      "expected_threshold": "0 functions with CogCC > 20",
+      "normalization_formula": "MAX(0, 100 – (Hotspot_Count × 15))",
+      "execution_frequency": "Every Commit / PR",
+      "python": {
+        "primary_tool": "cognitive-ast",
+        "secondary_tool": "radon_cc",
+        "metric_emitted_directly": "No",
+        "derivation": "cc - cognitive complexity value\nDefect Probability (%) = min(90, cc * 4)"
+      }
+    },
+    {
+      "id": "readability_maintainability_cognitive_complexity_modularization_opportunity",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Readability / Maintainability",
+      "l3_technique": "Cognitive Complexity",
+      "l4_classification": "Refactoring Guidance",
+      "l5_metric": "Modularization Opportunity",
+      "description": "Points to specific blocks of code that should be broken down into smaller, simpler functions, measuring the simplicity payoff if a specific area is refactored.",
+      "derivation": "cc - cognitive complexity value\nSuggested Modules = ceil(cc / 5)",
+      "raw_measurement_formula": "Refactor Candidate % = (Functions with CogCC > 15 / Total Functions) × 100",
+      "expected_threshold": "< 5% of functions flagged as refactor candidates",
+      "normalization_formula": "MAX(0, 100 – (Refactor_Candidate% × 10))",
+      "execution_frequency": "Every Commit / PR",
+      "python": {
+        "primary_tool": "cognitive-ast",
+        "secondary_tool": "radon_cc",
+        "metric_emitted_directly": "No",
+        "derivation": "cc - cognitive complexity value\nSuggested Modules = ceil(cc / 5)"
+      }
+    },
+    {
+      "id": "readability_maintainability_cognitive_complexity_reviewer_fatigue_factor",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Readability / Maintainability",
+      "l3_technique": "Cognitive Complexity",
+      "l4_classification": "Code Review Support",
+      "l5_metric": "Reviewer Fatigue Factor",
+      "description": "Estimates how much time a peer reviewer will need to spend verifying logic. High scores suggest a code review might be ineffective because the logic is too convoluted to check visually.",
+      "derivation": "cc - cognitive complexity value\nFatigue Score = cc * 3",
+      "raw_measurement_formula": "Fatigue Score = Count(PRs containing functions with CogCC > 15) / Total PRs × 100",
+      "expected_threshold": "< 10% of PRs contain high-CogCC functions",
+      "normalization_formula": "MAX(0, 100 – (Fatigue_Score × 5))",
+      "execution_frequency": "Every Commit / PR",
+      "python": {
+        "primary_tool": "cognitive-ast",
+        "secondary_tool": "radon_cc",
+        "metric_emitted_directly": "No",
+        "derivation": "cc - cognitive complexity value\nFatigue Score = cc * 3"
+      }
+    },
+    {
+      "id": "readability_maintainability_cognitive_complexity_qa_resource_allocation",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Readability / Maintainability",
+      "l3_technique": "Cognitive Complexity",
+      "l4_classification": "Testing Effort Prioritization",
+      "l5_metric": "QA Resource Allocation",
+      "description": "Helps managers direct the most experienced testers toward logic with high cognitive complexity, as it is the most likely place for edge-case bugs to hide.",
+      "derivation": "cc - cognitive complexity value\nif cc <= 3 → Low priority",
+      "raw_measurement_formula": "Allocation Coverage % = (High-CogCC Functions with dedicated test cases / Total High-CogCC Functions) × 100",
+      "expected_threshold": "100% of CogCC > 15 functions have dedicated test cases",
+      "normalization_formula": "Score = Allocation Coverage % [gate at 100%]",
+      "execution_frequency": "Every Commit / PR",
+      "python": {
+        "primary_tool": "cognitive-ast",
+        "secondary_tool": "radon_cc",
+        "metric_emitted_directly": "No",
+        "derivation": "cc - cognitive complexity value\nif cc <= 3 → Low priority"
+      }
+    },
+    {
+      "id": "readability_maintainability_cognitive_complexity_human_cognitive_load",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Readability / Maintainability",
+      "l3_technique": "Cognitive Complexity",
+      "l4_classification": "Code Understandability Analysis",
+      "l5_metric": "Human Cognitive Load",
+      "description": "Structural complexity penalising nesting depth and recursive flow; measures human comprehension difficulty",
+      "derivation": "cc - cognitive complexity value\nCognitive Load Score = cc * 5",
+      "raw_measurement_formula": "CogCC = sum of nesting-weighted increments for breaks in linear flow",
+      "expected_threshold": "<= 15 per unit (lower is better)",
+      "normalization_formula": "MAX(0, 100 – ((CogCC–1)/14 × 100))  capped 0–100",
+      "execution_frequency": "Every Commit / PR",
+      "python": {
+        "primary_tool": "cognitive-ast",
+        "secondary_tool": "radon_cc",
+        "metric_emitted_directly": "No",
+        "derivation": "cc - cognitive complexity value\nCognitive Load Score = cc * 5"
+      }
+    }
+  ]
+}

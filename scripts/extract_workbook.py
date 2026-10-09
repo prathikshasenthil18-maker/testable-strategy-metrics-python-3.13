@@ -110,6 +110,15 @@ def main() -> None:
     PKG_OUT.write_text(payload, encoding="utf-8")
     print(f"Wrote {len(records)} Python White Box metrics → {OUT}")
 
+    import sys
+
+    scripts_dir = Path(__file__).resolve().parent
+    if str(scripts_dir) not in sys.path:
+        sys.path.insert(0, str(scripts_dir))
+    from build_primary_tools_data import build  # noqa: WPS433
+
+    build()
+
 
 if __name__ == "__main__":
     main()

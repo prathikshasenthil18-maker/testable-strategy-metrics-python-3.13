@@ -1,0 +1,180 @@
+{
+  "workbook": "Testable_Strategy_Metrics_Mapping_v0.2_19_may_2026 2.xlsx",
+  "workbook_version": "0.2",
+  "primary_tool": "pip-audit",
+  "primary_tool_id": "pip_audit",
+  "metric_count": 8,
+  "secondary_tools": [
+    "safety"
+  ],
+  "metrics": [
+    {
+      "id": "security_white_box_testing_dependency_risk_sca_hidden_relationship_mapping",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Security White-box Testing",
+      "l3_technique": "Dependency Risk (SCA)",
+      "l4_classification": "Transitive Dependency Analysis",
+      "l5_metric": "Hidden Relationship Mapping",
+      "description": "Identifies and analyzes dependencies of dependencies to uncover hidden risks deep in your software stack, measuring the total depth of your external code tree.",
+      "derivation": "Hidden Relationship Risk =  count(total vulnerabilities) / count(dependencies)",
+      "raw_measurement_formula": "Transitive Risk Score = Count(Vulnerable Transitive Deps) × 20 + Count(Flagged Transitive Deps) × 5",
+      "expected_threshold": "0 vulnerable transitive dependencies in resolved tree",
+      "normalization_formula": "MAX(0, 100 – Transitive_Risk_Score)",
+      "execution_frequency": "Daily",
+      "python": {
+        "primary_tool": "pip-audit",
+        "secondary_tool": "safety",
+        "metric_emitted_directly": "No",
+        "derivation": "Hidden Relationship Risk =  count(total vulnerabilities) / count(dependencies)"
+      }
+    },
+    {
+      "id": "security_white_box_testing_dependency_risk_sca_legal_risk_validation",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Security White-box Testing",
+      "l3_technique": "Dependency Risk (SCA)",
+      "l4_classification": "License Compliance Testing",
+      "l5_metric": "Legal Risk Validation",
+      "description": "Checks the legal licenses of every library used to ensure they align with your project goals, measuring the risk of legal action or forced open-sourcing due to restrictive licenses.",
+      "derivation": "Legal Risk Proxy =  count(CVE-linked vulnerabilities)",
+      "raw_measurement_formula": "License Risk = Count(Copyleft Deps) × 20 + Count(Restricted Deps) × 10",
+      "expected_threshold": "0 copyleft licenses in production dependencies",
+      "normalization_formula": "MAX(0, 100 – License_Risk)",
+      "execution_frequency": "Weekly",
+      "python": {
+        "primary_tool": "pip-audit",
+        "secondary_tool": "safety",
+        "metric_emitted_directly": "No",
+        "derivation": "Legal Risk Proxy =  count(CVE-linked vulnerabilities)"
+      }
+    },
+    {
+      "id": "security_white_box_testing_dependency_risk_sca_trust_integrity_verification",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Security White-box Testing",
+      "l3_technique": "Dependency Risk (SCA)",
+      "l4_classification": "Supply Chain Security Analysis",
+      "l5_metric": "Trust Integrity Verification",
+      "description": "Evaluates the integrity of the source and delivery path of your libraries to prevent poisoned packages, measuring the reliability of maintainers and security of repositories.",
+      "derivation": "Supply Chain Risk =\ncount(all vulnerabilities across dependencies)",
+      "raw_measurement_formula": "Trust Score = Count(Unverified Package Sources) × 25 + Count(Deprecated Registries) × 10",
+      "expected_threshold": "0 packages from unverified or deprecated sources",
+      "normalization_formula": "MAX(0, 100 – Trust_Score)",
+      "execution_frequency": "Daily",
+      "python": {
+        "primary_tool": "pip-audit",
+        "secondary_tool": "safety",
+        "metric_emitted_directly": "No",
+        "derivation": "Supply Chain Risk =\ncount(all vulnerabilities across dependencies)"
+      }
+    },
+    {
+      "id": "security_white_box_testing_dependency_risk_sca_community_vitality_tracking",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Security White-box Testing",
+      "l3_technique": "Dependency Risk (SCA)",
+      "l4_classification": "Dependency Health Monitoring",
+      "l5_metric": "Community Vitality Tracking",
+      "description": "Measures the activity level and support of open-source projects you rely on, identifying zombie libraries abandoned by their creators that are unlikely to be updated if a bug is found.",
+      "derivation": "Community Vitality Score = count(vulnerabilities with fix_versions) / count(total vulnerabilities)",
+      "raw_measurement_formula": "Vitality Score = Count(Abandoned Deps, no commit > 12 months) × 20 + Count(Low-activity Deps) × 5",
+      "expected_threshold": "0 abandoned dependencies in production stack",
+      "normalization_formula": "MAX(0, 100 – Vitality_Score)",
+      "execution_frequency": "Weekly",
+      "python": {
+        "primary_tool": "pip-audit",
+        "secondary_tool": "safety",
+        "metric_emitted_directly": "No",
+        "derivation": "Community Vitality Score = count(vulnerabilities with fix_versions) / count(total vulnerabilities)"
+      }
+    },
+    {
+      "id": "security_white_box_testing_dependency_risk_sca_mitigation_effort_ranking",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Security White-box Testing",
+      "l3_technique": "Dependency Risk (SCA)",
+      "l4_classification": "Risk Prioritization",
+      "l5_metric": "Mitigation Effort Ranking",
+      "description": "Ranks identified dependency issues based on severity and exploitability, helping decide which patch to apply first when development time is limited.",
+      "derivation": "Mitigation Effort = count(vulnerabilities with fix_versions)",
+      "raw_measurement_formula": "Prioritization Coverage % = (Critical/High CVE Deps with assigned fix / Total Critical/High CVE Deps) × 100",
+      "expected_threshold": "100% of Critical/High CVE deps have assigned remediation",
+      "normalization_formula": "Score = Prioritization Coverage % [gate at 100%]",
+      "execution_frequency": "Daily",
+      "python": {
+        "primary_tool": "pip-audit",
+        "secondary_tool": "safety",
+        "metric_emitted_directly": "No",
+        "derivation": "Mitigation Effort = count(vulnerabilities with fix_versions)"
+      }
+    },
+    {
+      "id": "security_white_box_testing_dependency_risk_sca_real_time_alerting",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Security White-box Testing",
+      "l3_technique": "Dependency Risk (SCA)",
+      "l4_classification": "Continuous Dependency Monitoring",
+      "l5_metric": "Real-Time Alerting",
+      "description": "Provides an ongoing watchdog service that alerts immediately when a new vulnerability is discovered in your existing stack, acting as a permanent quality gate as the MVP evolves.",
+      "derivation": "Alert Signal =  count(new vulnerabilities detected in scan)",
+      "raw_measurement_formula": "Alert Response Rate % = (New CVE Alerts Actioned within SLA / Total New CVE Alerts) × 100",
+      "expected_threshold": "100% of new CVE alerts actioned within 24hrs (Critical) / 72hrs (High)",
+      "normalization_formula": "Score = Alert Response Rate % [gate at 100%]",
+      "execution_frequency": "Daily",
+      "python": {
+        "primary_tool": "pip-audit",
+        "secondary_tool": "safety",
+        "metric_emitted_directly": "No",
+        "derivation": "Alert Signal =  count(new vulnerabilities detected in scan)"
+      }
+    },
+    {
+      "id": "security_white_box_testing_dependency_risk_sca_known_cve_count",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Security White-box Testing",
+      "l3_technique": "Dependency Risk (SCA)",
+      "l4_classification": "Vulnerability Dependency Detection",
+      "l5_metric": "Known CVE Count",
+      "description": "Count of known CVEs in third-party dependencies, categorised by CVSS severity",
+      "derivation": "Known CVE Count =\ncount(vulnerabilities with CVE in aliases)",
+      "raw_measurement_formula": "CVE Score = Count(Crit)×25 + Count(High)×10 + Count(Med)×3 + Count(Low)×1",
+      "expected_threshold": "0 Critical CVEs; 0 High CVEs in production dependencies",
+      "normalization_formula": "MAX(0, 100 – CVE_Score)",
+      "execution_frequency": "Daily",
+      "python": {
+        "primary_tool": "pip-audit",
+        "secondary_tool": "safety",
+        "metric_emitted_directly": "No",
+        "derivation": "Known CVE Count =\ncount(vulnerabilities with CVE in aliases)"
+      }
+    },
+    {
+      "id": "security_white_box_testing_dependency_risk_sca_version_lag_assessment",
+      "sheet": "White Box",
+      "l1_strategy": "White Box",
+      "l2_testing_type": "Security White-box Testing",
+      "l3_technique": "Dependency Risk (SCA)",
+      "l4_classification": "Outdated Dependency Detection",
+      "l5_metric": "Version Lag Assessment",
+      "description": "Measures the age of your libraries by comparing installed versions against the latest stable releases, identifying components that no longer receive security patches.",
+      "derivation": "Version Lag =  count(vulnerabilities with fix_versions)",
+      "raw_measurement_formula": "Version Lag Score = Count(Deps > 2 major versions behind) × 15 + Count(Deps 1 major version behind) × 5",
+      "expected_threshold": "0 dependencies more than 2 major versions behind",
+      "normalization_formula": "MAX(0, 100 – Version_Lag_Score)",
+      "execution_frequency": "Daily",
+      "python": {
+        "primary_tool": "pip-audit",
+        "secondary_tool": "safety",
+        "metric_emitted_directly": "No",
+        "derivation": "Version Lag =  count(vulnerabilities with fix_versions)"
+      }
+    }
+  ]
+}

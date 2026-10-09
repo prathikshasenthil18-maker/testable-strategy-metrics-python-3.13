@@ -1,5 +1,19 @@
-from strategy_metrics.catalog import load_metrics, primary_tools_index
+from strategy_metrics.catalog import (
+    load_metrics,
+    load_primary_tool_bundle,
+    load_primary_tools_manifest,
+    primary_tools_index,
+)
 from strategy_metrics.derivations import apply_derivation, apply_metric_pipeline, normalize_score
+
+
+def test_primary_tool_bundles_cover_workbook() -> None:
+    manifest = load_primary_tools_manifest()
+    assert manifest["primary_tool_count"] == 16
+    assert sum(t["metric_count"] for t in manifest["tools"]) == 103
+    beniget = load_primary_tool_bundle(primary_tool="Beniget")
+    assert beniget["metric_count"] == 2
+    assert all(m["python"]["primary_tool"] == "Beniget" for m in beniget["metrics"])
 
 
 def test_catalog_has_python_primary_tools() -> None:
